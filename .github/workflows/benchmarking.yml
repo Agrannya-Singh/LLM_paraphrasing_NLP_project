@@ -1,0 +1,63 @@
+zname: Continuous Adversarial Defense Benchmarking
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  test_and_benchmark:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Cache HuggingFace Models
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/huggingface
+        key: ${{ runner.os }}-hf-${{ hashFiles('src/config.py') }}
+        restore-keys: |
+          ${{ runner.os }}-hf-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Unit & Integration Tests
+      run: |
+        python -m unittest discover -s tests -p "test_*.py" -v
+
+    - name: Execute Adversarial Defense Evaluation Pipeline (Static Corpus & Defenses)
+      env:
+        HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+      run: |
+        python experiments/run_pipeline.py --num-pairs 20
+
+    - name: Upload Benchmark Results & Datasets
+      uses: actions/upload-artifact@v4
+      with:
+        name: benchmark-results-python-${{ matrix.python-version }}
+        path: |
+          results/dataset_evasion_results.csv
+          results/dataset_evasion_results.json
+          results/dataset_evasion_results_full_trajectories.json
+          results/transferability_matrix.csv
+          results/metrics_summary.json
+          results/*.png
+        retention-days: 30
