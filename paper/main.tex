@@ -298,11 +298,11 @@ A candidate is rejected if $\mathcal{F}(\mathbf{x}, \mathbf{\hat{x}}) < \theta_{
 \subsection{Experimental Setup and Benchmark Corpus}
 Evaluations were executed across our standardized 120-document pair benchmark corpus spanning five distinct stylistic registers ($24$ pairs per domain):
 \begin{enumerate}
-    \item \textbf{Academic (PlagBench)}: Machine learning, NLP, diffusion models, transformers, and representation theory.
-    \item \textbf{Obfuscated (PADBen)}: Multi-level laundering spanning active-passive swaps, nominalization, and clause repackaging.
-    \item \textbf{Legal Court Corpus}: Long labor tribunal cases (Article 157), NDAs, commercial contracts, and CERCLA liability.
-    \item \textbf{Scientific (SciDocs / CSFCUBE)}: CRISPR gene editing, topological quantum gates, spintronics, and smFRET kinetics.
-    \item \textbf{Journalistic News (SemEval-2022 Task 8)}: Macroeconomic policy, satellite launches, semiconductor subsidies, and antitrust litigation.
+    \item \textbf{Legal Court Jurisprudence (Oliveira \& Nascimento)} \cite{oliveira2022legal}: Derived from the 210,000 Brazilian Portuguese labor court appeals (Zenodo Record 7686233, PLOS ONE), containing extensive statutory citations (e.g., Article 157 safety regulations), liability contracts, and civil damage adjudications.
+    \item \textbf{Scientific Multi-Task Literature (SciDocs \& CSFCube)} \cite{cohan2020scidocs, mysore2022scientific}: Sourced from Allen Institute for AI (MTEB \texttt{mteb/scidocs}) and IESL Lab (NeurIPS 2021), evaluating dense embeddings on fine-grained faceted scientific matching (methods, quantum gate topologies, smFRET kinetics, and CRISPR editing).
+    \item \textbf{Multilingual News Corpus (SemEval-2022 Task 8)} \cite{goel2022wolfies}: Sourced from MTEB STS22 and Zenodo 6507872, capturing cross-article topical alignment across macroeconomic policies, aerospace satellite launches, semiconductor subsidies, and antitrust proceedings.
+    \item \textbf{Academic Integrity Corpus (PlagBench)} \cite{lee2025plagbench}: High-density technical passages across machine learning theory, variational diffusion modeling, graph neural networks, and self-supervised InfoNCE representation spaces.
+    \item \textbf{Multi-Tier Obfuscation Corpus (PADBen)} \cite{zha2025padben}: Standardized adversarial text transformations spanning lexical substitution, active-passive inversion, and multi-hop syntactic repackaging.
 \end{enumerate}
 
 Quantitative evaluation metrics include:
@@ -537,6 +537,9 @@ J. X. Morris, E. Lifland, J. Y. Yoo, J. Grigsby, D. Jin, and Y. Qi, ``TextAttack
 
 \bibitem{ni2022sentence}
 J. Ni, G. H. Abrego, N. Constant, J. Ma, K. B. Hall, D. Cer, and Y. Yang, ``Sentence-T5: Scalable Sentence Encoders from Pre-trained Text-to-Text Models,'' \textit{Proc. ACL}, pp. 1864--1874, 2022.
+
+\bibitem{cohan2020scidocs}
+A. Cohan, S. Feldman, I. Beltagy, A. Armengol-Estap{\'e}, and D. S. Weld, ``SPECTER: Document-level Representation Learning using Citation-informed Transformers,'' \textit{Proc. ACL}, pp. 2270--2282, 2020.
 
 \bibitem{hans2024spotting}
 A. Hans, Y. Wen, J. Kirchenbauer, M. Y. R. Alam, Y. Singhal, Y. Cho, S. Bhattacharya, J. Geiping, and T. Goldstein, ``Spotting LLMs With Binomial Testing: A Statistical Approach to Watermarking,'' \textit{Proc. NeurIPS}, 2024.
