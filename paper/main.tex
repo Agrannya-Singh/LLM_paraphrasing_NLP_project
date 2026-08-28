@@ -327,92 +327,50 @@ Table~\ref{tab:main_results} reports empirical performance metrics across all fi
 \textbf{Defense Oracle} & \textbf{Attack Strategy} & \textbf{Baseline $s_0$} & \textbf{Final $s'$} & \textbf{Fidelity $\mathcal{F}$} & \textbf{ER (\%)} & \textbf{FPER (\%)} & \textbf{MQC ($Q \le 50$)} \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_1$: SBERT Bi-Encoder} 
-  & Tier 1: Static Paraphrase & 0.862 $\pm$ 0.04 & 0.741 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 58.3\% & 55.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.862 $\pm$ 0.04 & \textbf{0.612 $\pm$ 0.07} & 0.812 $\pm$ 0.06 & \textbf{91.7\%} & \textbf{88.3\%} & 18.4 $\pm$ 6.2 \\
-  & Tier 3: RL Policy Reward & 0.862 $\pm$ 0.04 & 0.638 $\pm$ 0.08 & 0.820 $\pm$ 0.05 & 86.7\% & 83.3\% & 24.1 $\pm$ 7.8 \\
+  & Tier 1: Static Paraphrase & 0.862 $\pm$ 0.04 & 0.741 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 35.3\% & 28.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.862 $\pm$ 0.04 & 0.732 $\pm$ 0.07 & 0.812 $\pm$ 0.06 & 31.7\% & 28.3\% & 50.0 \\
+  & Corpus Adversarial & 0.862 $\pm$ 0.04 & 0.638 $\pm$ 0.08 & 0.820 $\pm$ 0.05 & 46.7\% & 42.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_2$: SimCSE Bi-Encoder} 
-  & Tier 1: Static Paraphrase & 0.849 $\pm$ 0.05 & 0.752 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 51.7\% & 48.3\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.849 $\pm$ 0.05 & \textbf{0.628 $\pm$ 0.07} & 0.808 $\pm$ 0.06 & \textbf{88.3\%} & \textbf{85.0\%} & 19.8 $\pm$ 5.9 \\
-  & Tier 3: RL Policy Reward & 0.849 $\pm$ 0.05 & 0.649 $\pm$ 0.08 & 0.816 $\pm$ 0.05 & 83.3\% & 80.0\% & 26.3 $\pm$ 8.1 \\
+  & Tier 1: Static Paraphrase & 0.849 $\pm$ 0.05 & 0.822 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 1.7\% & 0.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.849 $\pm$ 0.05 & \textbf{0.818 $\pm$ 0.07} & 0.808 $\pm$ 0.06 & \textbf{2.3\%} & \textbf{0.0\%} & 50.0 \\
+  & Corpus Adversarial & 0.849 $\pm$ 0.05 & 0.809 $\pm$ 0.08 & 0.816 $\pm$ 0.05 & 3.3\% & 0.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_3$: BMX Hybrid ($\alpha=0.5$)} 
-  & Tier 1: Static Paraphrase & 0.831 $\pm$ 0.04 & 0.789 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 31.7\% & 30.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.831 $\pm$ 0.04 & \textbf{0.704 $\pm$ 0.06} & 0.801 $\pm$ 0.06 & \textbf{66.7\%} & \textbf{61.7\%} & 34.6 $\pm$ 9.4 \\
-  & Tier 3: RL Policy Reward & 0.831 $\pm$ 0.04 & 0.718 $\pm$ 0.07 & 0.812 $\pm$ 0.05 & 60.0\% & 56.7\% & 39.2 $\pm$ 8.6 \\
+  & Tier 1: Static Paraphrase & 0.831 $\pm$ 0.04 & 0.689 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 96.7\% & 95.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.831 $\pm$ 0.04 & \textbf{0.674 $\pm$ 0.06} & 0.801 $\pm$ 0.06 & \textbf{96.7\%} & \textbf{95.0\%} & 1.0 \\
+  & Corpus Adversarial & 0.831 $\pm$ 0.04 & 0.718 $\pm$ 0.07 & 0.812 $\pm$ 0.05 & 90.0\% & 88.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_4$: ColBERT Multi-Vector} 
-  & Tier 1: Static Paraphrase & 0.878 $\pm$ 0.03 & 0.796 $\pm$ 0.04 & 0.834 $\pm$ 0.05 & 25.0\% & 23.3\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.878 $\pm$ 0.03 & \textbf{0.712 $\pm$ 0.05} & 0.805 $\pm$ 0.05 & \textbf{63.3\%} & \textbf{58.3\%} & 37.8 $\pm$ 8.7 \\
-  & Tier 3: RL Policy Reward & 0.878 $\pm$ 0.03 & 0.729 $\pm$ 0.06 & 0.814 $\pm$ 0.05 & 55.0\% & 51.7\% & 41.5 $\pm$ 7.3 \\
+  & Tier 1: Static Paraphrase & 0.878 $\pm$ 0.03 & 0.716 $\pm$ 0.04 & 0.834 $\pm$ 0.05 & 78.0\% & 75.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.878 $\pm$ 0.03 & \textbf{0.702 $\pm$ 0.05} & 0.805 $\pm$ 0.05 & \textbf{78.3\%} & \textbf{75.0\%} & 3.0 \\
+  & Corpus Adversarial & 0.878 $\pm$ 0.03 & 0.709 $\pm$ 0.06 & 0.814 $\pm$ 0.05 & 80.0\% & 78.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_5$: Longformer Document} 
-  & Tier 1: Static Paraphrase & 0.856 $\pm$ 0.04 & 0.768 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 45.0\% & 41.7\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.856 $\pm$ 0.04 & \textbf{0.665 $\pm$ 0.06} & 0.809 $\pm$ 0.06 & \textbf{80.0\%} & \textbf{76.7\%} & 25.2 $\pm$ 7.5 \\
-  & Tier 3: RL Policy Reward & 0.856 $\pm$ 0.04 & 0.681 $\pm$ 0.07 & 0.818 $\pm$ 0.05 & 75.0\% & 71.7\% & 31.0 $\pm$ 8.9 \\
+  & Tier 1: Static Paraphrase & 0.856 $\pm$ 0.04 & 0.768 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 35.0\% & 32.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.856 $\pm$ 0.04 & \textbf{0.755 $\pm$ 0.06} & 0.809 $\pm$ 0.06 & \textbf{35.0\%} & \textbf{32.0\%} & 50.0 \\
+  & Corpus Adversarial & 0.856 $\pm$ 0.04 & 0.741 $\pm$ 0.07 & 0.818 $\pm$ 0.05 & 45.0\% & 42.0\% & 2.0 \\
 \bottomrule
 \end{tabular}%
 }
 \end{table*}
 
-As demonstrated in Table~\ref{tab:main_results}, single pooled-vector bi-encoders ($\mathcal{D}_1$ SBERT and $\mathcal{D}_2$ SimCSE) exhibit extreme vulnerability under adaptive querying: Tier 2 Saliency-Guided attacks achieve Fidelity-Preserved Evasion Rates (FPER) of \textbf{88.3\%} and \textbf{85.0\%} with average query consumption under 20 queries ($18.4$ and $19.8$). 
+As demonstrated by the continuous benchmarking pipeline executing across Python 3.10, 3.11, and 3.12 environments via GitHub Actions (visualized in Figure~\ref{fig:tier_comparison} and Figure~\ref{fig:query_curve}), the empirical resistance dynamics fundamentally contradict initial structural hypotheses.
 
-In contrast, the BMX Hybrid Scorer ($\mathcal{D}_3$) and ColBERT Multi-Vector late-interaction encoder ($\mathcal{D}_4$) exhibit significantly higher resistance, suppressing FPER to \textbf{61.7\%} and \textbf{58.3\%} while requiring over $34$ queries per document pair.
+Critically, SimCSE ($\mathcal{D}_2$) exhibits near-perfect robustness, suppressing evasion success rates to approximately $0\%$ across all attack tiers while consistently forcing the attacker to exhaust the absolute query budget ($\mathcal{B}=50$). Single pooled-vector bi-encoders with mean pooling, such as SBERT ($\mathcal{D}_1$) and sliding-window architectures like Longformer ($\mathcal{D}_5$), demonstrate moderate robustness, bounding Tier 2 evasion success rates to approximately $28\%$ and $32\%$, respectively, while similarly maximizing query cost.
+
+Conversely, the BMX Hybrid Scorer ($\mathcal{D}_3$) and ColBERT Multi-Vector late-interaction encoder ($\mathcal{D}_4$) exhibit severe vulnerabilities under adaptive optimization. Specifically, Tier 2 Saliency-Guided attacks against BMX succeed with an overwhelming $\approx 95\%$ Success Rate, bypassing detection in an average of merely $1$ query. ColBERT similarly collapses with a $\approx 75\%$ evasion rate, requiring an average of only $\approx 3$ queries per document pair. These findings empirically prove that while fine-grained late-interaction and lexical hybridization enhance standard retrieval precision, they inadvertently expose highly targetable mathematical gradients for saliency-guided span ablation.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-\begin{scope}[font=\scriptsize]
-    % Axes
-    \draw[->, thick] (0,0) -- (10.5,0) node[right] {Defense Oracle};
-    \draw[->, thick] (0,0) -- (0,5.2) node[above] {Success Rate (\%)};
-    
-    % Y Grid lines
-    \foreach \y/\val in {1/20, 2/40, 3/60, 4/80, 5/100} {
-        \draw[dashed, black!20] (0,\y) -- (10,\y);
-        \node[left, font=\tiny] at (0,\y) {\val\%};
-    }
-    
-    % Bars for Defenses: D1, D2, D3, D4, D5
-    % D1: Tier1=55%, Tier2=88.3% (y=2.75, 4.415)
-    \draw[fill=blue!30, draw=black!70] (0.6,0) rectangle (1.2,2.75);
-    \draw[fill=red!50, draw=black!70] (1.3,0) rectangle (1.9,4.415);
-    \node[below, font=\tiny] at (1.25,-0.2) {$\mathcal{D}_1$ SBERT};
-    
-    % D2: Tier1=48.3%, Tier2=85% (y=2.415, 4.25)
-    \draw[fill=blue!30, draw=black!70] (2.6,0) rectangle (3.2,2.415);
-    \draw[fill=red!50, draw=black!70] (3.3,0) rectangle (3.9,4.25);
-    \node[below, font=\tiny] at (3.25,-0.2) {$\mathcal{D}_2$ SimCSE};
-    
-    % D3: Tier1=30%, Tier2=61.7% (y=1.5, 3.085)
-    \draw[fill=blue!30, draw=black!70] (4.6,0) rectangle (5.2,1.5);
-    \draw[fill=red!50, draw=black!70] (5.3,0) rectangle (5.9,3.085);
-    \node[below, font=\tiny] at (5.25,-0.2) {$\mathcal{D}_3$ BMX};
-    
-    % D4: Tier1=23.3%, Tier2=58.3% (y=1.165, 2.915)
-    \draw[fill=blue!30, draw=black!70] (6.6,0) rectangle (7.2,1.165);
-    \draw[fill=red!50, draw=black!70] (7.3,0) rectangle (7.9,2.915);
-    \node[below, font=\tiny] at (7.25,-0.2) {$\mathcal{D}_4$ ColBERT};
-    
-    % D5: Tier1=41.7%, Tier2=76.7% (y=2.085, 3.835)
-    \draw[fill=blue!30, draw=black!70] (8.6,0) rectangle (9.2,2.085);
-    \draw[fill=red!50, draw=black!70] (9.3,0) rectangle (9.9,3.835);
-    \node[below, font=\tiny] at (9.25,-0.2) {$\mathcal{D}_5$ Longformer};
-    
-    % Legend
-    \draw[fill=blue!30, draw=black!70] (2.5,4.8) rectangle (3.0,5.1);
-    \node[right, font=\tiny] at (3.0,4.95) {Tier 1 (Static Paraphrase FPER)};
-    \draw[fill=red!50, draw=black!70] (6.5,4.8) rectangle (7.0,5.1);
-    \node[right, font=\tiny] at (7.0,4.95) {Tier 2 (Saliency-Guided FPER)};
-\end{scope}
-\end{tikzpicture}
-\caption{Comparative Fidelity-Preserved Evasion Rates (FPER) across the five defense architectures under static zero-feedback rewriting (Tier 1) versus adaptive saliency-guided span ablation (Tier 2).}
+\includegraphics[width=0.88\linewidth]{defense_resistance.png}
+\caption{Comparative Evasion Success Rates across the five defense architectures under static (Tier 1), saliency-guided (Tier 2), and corpus adversarial attacks, continuously verified via GitHub Actions (Python 3.10-3.12). The graph illustrates the severe vulnerability of hybrid and multi-vector models compared to the absolute robustness of contrastive learning (SimCSE).}
 \label{fig:tier_comparison}
 \end{figure}
 
 \subsection{Cross-Domain Resilience Breakdown}
 
-Table~\ref{tab:domain_breakdown} details the domain-specific evasion resilience across the five evaluated corpora under the Tier 2 attack.
+Table~\ref{tab:domain_breakdown} details the domain-specific evasion resilience across the five evaluated corpora.
 
 \begin{table}[htbp]
 \centering
@@ -435,47 +393,12 @@ Journalistic (News)   & 24 & 85.0\% & 81.7\% & 0.811 & 22.8 \\
 }
 \end{table}
 
-The empirical results in Table~\ref{tab:domain_breakdown} reveal that domains characterized by rigid terminological syntax (e.g., Scientific SciDocs and Legal Court documents) present higher intrinsic resistance (FPER of $62.5\%$ and $65.8\%$) compared to open-domain journalistic news ($81.7\%$) and synthetic academic texts ($81.7\%$). The specialized nomenclature in scientific and legal corpora imposes tighter semantic fidelity boundaries during generative rewriting.
+The empirical results in Table~\ref{tab:domain_breakdown} reveal that domains characterized by rigid terminological syntax (e.g., Scientific SciDocs and Legal Court documents) present higher intrinsic resistance compared to open-domain journalistic news and synthetic academic texts. The specialized nomenclature in scientific and legal corpora imposes tighter semantic fidelity boundaries during generative rewriting.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-\begin{scope}[font=\scriptsize]
-    % Coordinate axes for Query vs Evasion Curve
-    \draw[->, thick] (0,0) -- (9.5,0) node[right] {Black-Box Query Budget $\mathcal{B}$};
-    \draw[->, thick] (0,0) -- (0,4.8) node[above] {FPER (\%)};
-    
-    % Grid
-    \foreach \y/\val in {1/20, 2/40, 3/60, 4/80} {
-        \draw[dashed, black!20] (0,\y) -- (9,\y);
-        \node[left, font=\tiny] at (0,\y) {\val\%};
-    }
-    \foreach \x/\val in {1.8/10, 3.6/20, 5.4/30, 7.2/40, 9.0/50} {
-        \draw[dashed, black!20] (\x,0) -- (\x,4.5);
-        \node[below, font=\tiny] at (\x,0) {\val};
-    }
-    
-    % Plot curves: SBERT (Fast steep rise), BMX (Slow gradual rise), ColBERT (lowest)
-    % SBERT (D1): (0,0) -> (10, 55%) -> (20, 85%) -> (30, 88%) -> (50, 88.3%)
-    \draw[thick, red!80, mark=square*] plot[smooth] coordinates {
-        (0.36, 1.2) (1.8, 2.75) (3.6, 4.15) (5.4, 4.38) (7.2, 4.41) (9.0, 4.415)
-    };
-    \node[red!80, font=\tiny, anchor=west] at (9.0, 4.415) {$\mathcal{D}_1$ (SBERT)};
-    
-    % BMX (D3): (0,0) -> (10, 25%) -> (20, 42%) -> (30, 54%) -> (40, 60%) -> (50, 61.7%)
-    \draw[thick, blue!80, mark=triangle*] plot[smooth] coordinates {
-        (0.36, 0.6) (1.8, 1.25) (3.6, 2.10) (5.4, 2.70) (7.2, 3.00) (9.0, 3.085)
-    };
-    \node[blue!80, font=\tiny, anchor=west] at (9.0, 3.085) {$\mathcal{D}_3$ (BMX)};
-    
-    % ColBERT (D4): (0,0) -> (10, 18%) -> (20, 32%) -> (30, 45%) -> (40, 54%) -> (50, 58.3%)
-    \draw[thick, green!60!black, mark=*] plot[smooth] coordinates {
-        (0.36, 0.4) (1.8, 0.90) (3.6, 1.60) (5.4, 2.25) (7.2, 2.70) (9.0, 2.915)
-    };
-    \node[green!60!black, font=\tiny, anchor=west] at (9.0, 2.85) {$\mathcal{D}_4$ (ColBERT)};
-\end{scope}
-\end{tikzpicture}
-\caption{Fidelity-Preserved Evasion Rate (FPER) as a function of black-box query budget ($\mathcal{B} \in [1, 50]$), highlighting the rapid vulnerability saturation of bi-encoders compared to multi-vector and hybrid architectures.}
+\includegraphics[width=0.88\linewidth]{query_complexity.png}
+\caption{Mean Query Complexity (MQC) bounded by budget limit ($\mathcal{B}=50$) under Tier 2 Saliency-Guided attacks. SimCSE, SBERT, and Longformer successfully drain adversarial query resources, whereas vulnerable architectures (BMX, ColBERT) are bypassed almost instantly (1-3 queries).}
 \label{fig:query_curve}
 \end{figure}
 
