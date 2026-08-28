@@ -15,7 +15,10 @@
 - **Pre-populated Paraphrases**: Claude, GPT, or human-generated paraphrases are stored directly within the `"paraphrases"` dictionary of each benchmark item for reproducible, deterministic evaluation against the 5 defense oracles ($D_1$ to $D_5$) and the independent NLI fidelity gate.
 
 ## 3. Benchmarking CI/CD Policy
-- **Workflow**: `.github/workflows/benchmarking.yml`
-- **Trigger Policy**: Configured for on-demand manual trigger (`workflow_dispatch`) and weekly cron schedule (`0 0 * * 0`) to conserve GitHub Actions runner minutes and avoid running full benchmarks on every commit.
+- **Workflows**: 
+  - `.github/workflows/benchmarking.yml` (Adversarial Defense Benchmarking)
+  - `.github/workflows/regression_sanity.yml` (Sanity Regression Test Suite & Verification)
+  - `.github/workflows/compile_latex.yml` (LaTeX Paper PDF Build)
+- **Trigger Policy**: Configured strictly for on-demand manual execution (`workflow_dispatch`). No actions run automatically on commits or pull requests to conserve GitHub Actions runner minutes.
 - **Execution Matrix**: Python 3.10, 3.11, 3.12 on `ubuntu-latest`.
-- **Artifacts**: Publication of `dataset_evasion_results.csv`, `transferability_matrix.csv`, `metrics_summary.json`, and analytical heatmap figures.
+- **Artifacts**: Publication of `dataset_evasion_results.csv`, `transferability_matrix.csv`, `metrics_summary.json`, `Adversarial_Plagiarism_Benchmarking_Paper_PDF`, and analytical figures.
