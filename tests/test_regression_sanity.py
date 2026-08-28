@@ -118,12 +118,12 @@ class TestSanityRegression(unittest.TestCase):
         self.assertIn("\\begin{algorithm}", tex, "Algorithm block missing")
         self.assertIn("\\label{alg:saliency_attack}", tex, "Algorithm label alg:saliency_attack missing")
         
-        # Tables 1 to 5
+        # Tables & Heatmap Figure
         self.assertIn("\\label{tab:main_results}", tex, "Table 1 (main_results) missing")
         self.assertIn("\\label{tab:domain_breakdown}", tex, "Table 2 (domain_breakdown) missing")
-        self.assertIn("\\label{tab:transferability}", tex, "Table 3 (transferability) missing")
-        self.assertIn("\\label{tab:bmx_ablation}", tex, "Table 4 (bmx_ablation) missing")
-        self.assertIn("\\label{tab:baseline_comparison}", tex, "Table 5 (baseline_comparison) missing")
+        self.assertIn("\\label{tab:bmx_ablation}", tex, "Table (bmx_ablation) missing")
+        self.assertIn("\\label{tab:baseline_comparison}", tex, "Table (baseline_comparison) missing")
+        self.assertIn("\\label{fig:transferability_heatmap}", tex, "Transferability Heatmap (fig:transferability_heatmap) missing")
 
     def test_07_latex_bibliography_citations_count(self):
         """Ensures at least 20 academic references exist in the bibliography as per guidelines."""
@@ -139,25 +139,26 @@ class TestSanityRegression(unittest.TestCase):
             self.assertIn(cite_key, bibitems, f"Canonical citation '{cite_key}' missing from bibliography")
 
     # -------------------------------------------------------------
-    # 3. Plotting & LaTeX Figure Extraction
+    # 3. Native LaTeX PGFPlots Graph Verification
     # -------------------------------------------------------------
-    def test_08_graph_files_exist_and_non_empty(self):
-        """Verifies that generated PNG plots exist and are non-zero byte images."""
-        self.assertTrue(os.path.exists(self.fig_resistance), "paper/defense_resistance.png does not exist")
-        self.assertTrue(os.path.exists(self.fig_complexity), "paper/query_complexity.png does not exist")
-        
-        self.assertGreater(os.path.getsize(self.fig_resistance), 1000, "defense_resistance.png is corrupted/empty")
-        self.assertGreater(os.path.getsize(self.fig_complexity), 1000, "query_complexity.png is corrupted/empty")
+    def test_08_native_pgfplots_configuration(self):
+        """Verifies that pgfplots package and compatible environment are properly configured."""
+        with open(self.tex_path, "r", encoding="utf-8") as f:
+            tex = f.read()
+        self.assertIn("\\usepackage{pgfplots}", tex, "pgfplots package missing from main.tex")
+        self.assertIn("\\pgfplotsset{compat=1.18}", tex, "pgfplotsset compat setting missing from main.tex")
+        self.assertIn("\\begin{axis}", tex, "No pgfplots axis environment found in main.tex")
 
-    def test_09_graph_inclusion_in_latex(self):
-        """Verifies that paper/main.tex properly references and embeds the generated PNG figures."""
+    def test_09_native_graph_elements_in_latex(self):
+        """Verifies that all 4 native LaTeX figures (bar charts & transferability heatmap) are defined."""
         with open(self.tex_path, "r", encoding="utf-8") as f:
             tex = f.read()
 
-        self.assertIn("defense_resistance.png", tex, "defense_resistance.png not referenced via \\includegraphics in main.tex")
-        self.assertIn("query_complexity.png", tex, "query_complexity.png not referenced via \\includegraphics in main.tex")
         self.assertIn("\\label{fig:tier_comparison}", tex, "Figure label fig:tier_comparison missing")
+        self.assertIn("\\label{fig:domain_breakdown_plot}", tex, "Figure label fig:domain_breakdown_plot missing")
         self.assertIn("\\label{fig:query_curve}", tex, "Figure label fig:query_curve missing")
+        self.assertIn("\\label{fig:transferability_heatmap}", tex, "Figure label fig:transferability_heatmap missing")
+        self.assertIn("matrix plot", tex, "Native heatmap matrix plot missing from main.tex")
 
 if __name__ == "__main__":
     unittest.main()
