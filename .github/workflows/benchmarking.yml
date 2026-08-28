@@ -1,4 +1,4 @@
-zname: Continuous Adversarial Defense Benchmarking
+name: Continuous Adversarial Defense Benchmarking
 
 on:
   push:
