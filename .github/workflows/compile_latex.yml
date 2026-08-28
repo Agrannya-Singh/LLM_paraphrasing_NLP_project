@@ -1,10 +1,6 @@
 name: Build LaTeX Research Paper to PDF
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
