@@ -9,9 +9,10 @@ from .bmx import BMXDefense
 from .colbert import ColBERTDefense
 from .longformer import LongformerDefense
 
-def load_defense_matrix(threshold: float = 0.75):
+def load_defense_matrix(threshold: float = None):
     """
     Instantiates the five-architecture defense matrix D1 to D5.
+    Defaults to per-architecture calibrated thresholds (tau_i) if threshold is None.
     """
     return {
         "D1_SBERT": SBERTDefense(threshold=threshold),

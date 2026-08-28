@@ -15,9 +15,10 @@ from typing import Dict, List
 sys.stdout.reconfigure(line_buffering=True)
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+import numpy as np
 from src.config import config
 from src.corpus.loader import CorpusLoader
-from src.defenses import load_defense_matrix
+from src.defenses import load_defense_matrix, BMXDefense
 from src.fidelity.judge import IndependentFidelityJudge
 from src.attacks.llm_generator import LLMParaphraseGenerator
 from src.attacks.tier1_static import Tier1StaticAttack
