@@ -291,37 +291,37 @@ stateDiagram-v2
 
 The benchmark corpus [`data/benchmark_pairs.json`](data/benchmark_pairs.json) contains **250 standardized document pairs** ($50$ pairs per domain):
 
-| Domain | Benchmark Dataset | Source Repository / Identifier | Pairs | Evaluation Facets |
-| :--- | :--- | :--- | :---: | :--- |
-| `legal` | **Oliveira & Nascimento Legal Data** | [Zenodo 7686233](https://doi.org/10.5281/zenodo.7686233) / [PLOS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0320244) | **50** | Brazilian labor appeals, Article 157 safety regulations, NDAs, patent equivalence |
-| `scidocs` | **SciDocs** | [Hugging Face `mteb/scidocs`](https://huggingface.co/datasets/mteb/scidocs) / [GitHub](https://github.com/allenai/scidocs) | **50** | CRISPR kinetics, topological quantum gates, cuprate superconductivity, smFRET |
-| `academic` | **CSFCube & PlagBench** | [GitHub `iesl/CSFCube`](https://github.com/iesl/CSFCube) / [NeurIPS 2021](https://neurips.cc/virtual/2021/29866) | **50** | Faceted CS literature search (Method / Goal / Result), InfoNCE, GNN pooling, LoRA |
-| `news` | **SemEval-2022 Task 8** | [Hugging Face `mteb/sts22-crosslingual-sts`](https://huggingface.co/datasets/mteb/sts22-crosslingual-sts) / [Zenodo](https://zenodo.org/records/6507872) | **50** | Multilingual news alignment, central bank rate hikes, radar satellites, chip subsidies |
-| `padben` | **PADBen** | [PADBen GitHub](https://github.com/PADBen/PADBen) / [AAAI 2025](https://arxiv.org) | **50** | Levels 1–5 syntactic laundering, nominalization, active-passive inversion |
+| Domain | Benchmark Dataset | Pairs | Evaluation Facets |
+| :--- | :--- | :---: | :--- |
+| `legal` | **Oliveira & Nascimento Legal Data** | **50** | Brazilian labor appeals, Article 157 safety regulations, NDAs, patent equivalence |
+| `scidocs` | **SciDocs** | **50** | CRISPR kinetics, topological quantum gates, cuprate superconductivity, smFRET |
+| `academic` | **CSFCube & PlagBench** | **50** | Faceted CS literature search (Method / Goal / Result), InfoNCE, GNN pooling, LoRA |
+| `news` | **SemEval-2022 Task 8** | **50** | Multilingual news alignment, central bank rate hikes, radar satellites, chip subsidies |
+| `padben` | **PADBen** | **50** | Levels 1–5 syntactic laundering, nominalization, active-passive inversion |
 
 ---
 
 ## 5. Empirical Benchmark Results
 
-### Defense Oracle Resistance Under Adaptive Querying ($\mathcal{B}=50, \tau=0.75, \theta_{\text{fid}}=0.75$)
+### Defense Oracle Resistance Under Adaptive Querying ($\mathcal{B}=50, \theta_{\text{fid}}=0.75$)
 
 | Defense Oracle | Attack Strategy | Baseline $s_0$ | Final $s'$ | Fidelity $\mathcal{F}$ | ER (%) | FPER (%) | Mean Queries (MQC) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **$\mathcal{D}_1$: SBERT** | Tier 1: Static Paraphrase | 0.862 | 0.741 | 0.834 | 35.3% | 25.0% | 2.0 |
-| | **Tier 2: Saliency-Guided** | 0.862 | **0.732** | 0.812 | **35.0%** | **30.0%** | **32.7** |
-| | Corpus Adversarial | 0.862 | 0.638 | 0.820 | 46.7% | 42.0% | 2.0 |
-| **$\mathcal{D}_2$: SimCSE** | Tier 1: Static Paraphrase | 0.849 | 0.822 | 0.834 | 0.0% | 0.0% | 2.0 |
-| | **Tier 2: Saliency-Guided** | 0.849 | **0.818** | 0.808 | **0.0%** | **0.0%** | **50.0 (Budget Limit)** |
-| | Corpus Adversarial | 0.849 | 0.809 | 0.816 | 0.0% | 0.0% | 2.0 |
-| **$\mathcal{D}_3$: BMX Hybrid** | Tier 1: Static Paraphrase | 0.831 | 0.689 | 0.834 | 90.0% | 90.0% | 2.0 |
-| | **Tier 2: Saliency-Guided** | 0.831 | **0.674** | 0.801 | **90.0%** | **90.0%** | **1.0** |
-| | Corpus Adversarial | 0.831 | 0.718 | 0.812 | 90.0% | 85.0% | 2.0 |
-| **$\mathcal{D}_4$: ColBERT** | Tier 1: Static Paraphrase | 0.878 | 0.716 | 0.834 | 75.0% | 70.0% | 2.0 |
-| | **Tier 2: Saliency-Guided** | 0.878 | **0.702** | 0.805 | **75.0%** | **70.0%** | **8.9** |
-| | Corpus Adversarial | 0.878 | 0.709 | 0.814 | 75.0% | 70.0% | 2.0 |
-| **$\mathcal{D}_5$: Longformer** | Tier 1: Static Paraphrase | 0.856 | 0.768 | 0.834 | 35.0% | 25.0% | 2.0 |
-| | **Tier 2: Saliency-Guided** | 0.856 | **0.755** | 0.809 | **35.0%** | **30.0%** | **33.2** |
-| | Corpus Adversarial | 0.856 | 0.741 | 0.818 | 45.0% | 40.0% | 2.0 |
+| **$\mathcal{D}_1$: SBERT** | Tier 1: Static Paraphrase | 0.767 | 0.764 | 0.836 | 55.0% | 55.0% | 1.5 |
+| ($\tau_1=0.78$) | **Tier 2: Saliency-Guided** | 0.767 | **0.758** | 0.837 | **55.0%** | **55.0%** | **23.4** |
+| | Corpus Adversarial | 0.767 | 0.733 | 0.835 | 65.0% | 60.0% | 2.0 |
+| **$\mathcal{D}_2$: SimCSE** | Tier 1: Static Paraphrase | 0.921 | 0.920 | 0.836 | 10.0% | 10.0% | 1.9 |
+| ($\tau_2=0.88$) | **Tier 2: Saliency-Guided** | 0.921 | **0.917** | 0.835 | **15.0%** | **15.0%** | **43.0 (Near Limit)** |
+| | Corpus Adversarial | 0.921 | 0.906 | 0.835 | 20.0% | 15.0% | 2.0 |
+| **$\mathcal{D}_3$: BMX Hybrid** | Tier 1: Static Paraphrase | 0.497 | 0.493 | 0.835 | 40.0% | 40.0% | 1.6 |
+| ($\tau_3=0.48$) | **Tier 2: Saliency-Guided** | 0.497 | **0.488** | 0.835 | **40.0%** | **40.0%** | **30.8** |
+| | Corpus Adversarial | 0.497 | 0.473 | 0.835 | 30.0% | 25.0% | 2.0 |
+| **$\mathcal{D}_4$: ColBERT** | Tier 1: Static Paraphrase | 0.693 | 0.689 | 0.836 | 45.0% | 45.0% | 1.6 |
+| ($\tau_4=0.68$) | **Tier 2: Saliency-Guided** | 0.693 | **0.683** | 0.836 | **45.0%** | **45.0%** | **27.9** |
+| | Corpus Adversarial | 0.693 | 0.685 | 0.835 | 45.0% | 40.0% | 2.0 |
+| **$\mathcal{D}_5$: Longformer** | Tier 1: Static Paraphrase | 0.767 | 0.763 | 0.838 | 45.0% | 45.0% | 1.6 |
+| ($\tau_5=0.76$) | **Tier 2: Saliency-Guided** | 0.767 | **0.759** | 0.836 | **45.0%** | **45.0%** | **27.9** |
+| | Corpus Adversarial | 0.767 | 0.733 | 0.835 | 45.0% | 40.0% | 2.0 |
 
 ### Cross-Architecture Adversarial Transferability Matrix $\mathbf{T} \in \mathbb{R}^{5 \times 5}$
 
@@ -329,11 +329,11 @@ $$T_{i, j} = \text{FPER}(\mathcal{P}_{\mathcal{D}_i}(\mathbf{\tilde{x}}) \to \ma
 
 | Source Architecture ($\mathcal{D}_i$) | Target $\mathcal{D}_1$ (SBERT) | Target $\mathcal{D}_2$ (SimCSE) | Target $\mathcal{D}_3$ (BMX) | Target $\mathcal{D}_4$ (ColBERT) | Target $\mathcal{D}_5$ (Longformer) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **$\mathcal{D}_1$: SBERT** | **0.300** | 0.000 | 0.900 | 0.700 | 0.300 |
-| **$\mathcal{D}_2$: SimCSE** | 0.250 | **0.000** | 0.900 | 0.650 | 0.250 |
-| **$\mathcal{D}_3$: BMX Hybrid** | 0.250 | 0.000 | **0.900** | 0.650 | 0.250 |
-| **$\mathcal{D}_4$: ColBERT** | 0.250 | 0.000 | 0.900 | **0.700** | 0.250 |
-| **$\mathcal{D}_5$: Longformer** | 0.300 | 0.000 | 0.850 | 0.650 | **0.300** |
+| **$\mathcal{D}_1$: SBERT** | **0.550** | 0.100 | 0.400 | 0.500 | 0.450 |
+| **$\mathcal{D}_2$: SimCSE** | 0.500 | **0.150** | 0.400 | 0.500 | 0.450 |
+| **$\mathcal{D}_3$: BMX Hybrid** | 0.500 | 0.100 | **0.400** | 0.550 | 0.450 |
+| **$\mathcal{D}_4$: ColBERT** | 0.450 | 0.100 | 0.400 | **0.450** | 0.450 |
+| **$\mathcal{D}_5$: Longformer** | 0.500 | 0.100 | 0.400 | 0.450 | **0.450** |
 
 ---
 
