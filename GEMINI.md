@@ -20,5 +20,5 @@
   - `.github/workflows/regression_sanity.yml` (Sanity Regression Test Suite & Verification)
   - `.github/workflows/compile_latex.yml` (LaTeX Paper PDF Build)
 - **Trigger Policy**: Configured strictly for on-demand manual execution (`workflow_dispatch`). No actions run automatically on commits or pull requests to conserve GitHub Actions runner minutes.
-- **Execution Matrix**: Python 3.10, 3.11, 3.12 on `ubuntu-latest`.
+- **Execution Environment**: Standardized Python 3.11 on `ubuntu-latest` (single runner job to eliminate compute waste).
 - **Artifacts**: Publication of `dataset_evasion_results.csv`, `transferability_matrix.csv`, `metrics_summary.json`, `Adversarial_Plagiarism_Benchmarking_Paper_PDF`, and analytical figures.
