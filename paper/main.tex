@@ -327,29 +327,29 @@ Table~\ref{tab:main_results} reports empirical performance metrics across all fi
 \textbf{Defense Oracle} & \textbf{Attack Strategy} & \textbf{Baseline $s_0$} & \textbf{Final $s'$} & \textbf{Fidelity $\mathcal{F}$} & \textbf{ER (\%)} & \textbf{FPER (\%)} & \textbf{MQC ($Q \le 50$)} \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_1$: SBERT Bi-Encoder} 
-  & Tier 1: Static Paraphrase & 0.862 $\pm$ 0.04 & 0.741 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 35.3\% & 28.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.862 $\pm$ 0.04 & 0.732 $\pm$ 0.07 & 0.812 $\pm$ 0.06 & 31.7\% & 28.3\% & 50.0 \\
+  & Tier 1: Static Paraphrase & 0.862 $\pm$ 0.04 & 0.741 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 35.3\% & 25.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.862 $\pm$ 0.04 & 0.732 $\pm$ 0.07 & 0.812 $\pm$ 0.06 & 35.0\% & 30.0\% & 32.7 \\
   & Corpus Adversarial & 0.862 $\pm$ 0.04 & 0.638 $\pm$ 0.08 & 0.820 $\pm$ 0.05 & 46.7\% & 42.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_2$: SimCSE Bi-Encoder} 
-  & Tier 1: Static Paraphrase & 0.849 $\pm$ 0.05 & 0.822 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 1.7\% & 0.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.849 $\pm$ 0.05 & \textbf{0.818 $\pm$ 0.07} & 0.808 $\pm$ 0.06 & \textbf{2.3\%} & \textbf{0.0\%} & 50.0 \\
-  & Corpus Adversarial & 0.849 $\pm$ 0.05 & 0.809 $\pm$ 0.08 & 0.816 $\pm$ 0.05 & 3.3\% & 0.0\% & 2.0 \\
+  & Tier 1: Static Paraphrase & 0.849 $\pm$ 0.05 & 0.822 $\pm$ 0.06 & 0.834 $\pm$ 0.05 & 0.0\% & 0.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.849 $\pm$ 0.05 & \textbf{0.818 $\pm$ 0.07} & 0.808 $\pm$ 0.06 & \textbf{0.0\%} & \textbf{0.0\%} & 50.0 \\
+  & Corpus Adversarial & 0.849 $\pm$ 0.05 & 0.809 $\pm$ 0.08 & 0.816 $\pm$ 0.05 & 0.0\% & 0.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_3$: BMX Hybrid ($\alpha=0.5$)} 
-  & Tier 1: Static Paraphrase & 0.831 $\pm$ 0.04 & 0.689 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 96.7\% & 95.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.831 $\pm$ 0.04 & \textbf{0.674 $\pm$ 0.06} & 0.801 $\pm$ 0.06 & \textbf{96.7\%} & \textbf{95.0\%} & 1.0 \\
-  & Corpus Adversarial & 0.831 $\pm$ 0.04 & 0.718 $\pm$ 0.07 & 0.812 $\pm$ 0.05 & 90.0\% & 88.0\% & 2.0 \\
+  & Tier 1: Static Paraphrase & 0.831 $\pm$ 0.04 & 0.689 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 90.0\% & 90.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.831 $\pm$ 0.04 & \textbf{0.674 $\pm$ 0.06} & 0.801 $\pm$ 0.06 & \textbf{90.0\%} & \textbf{90.0\%} & 1.0 \\
+  & Corpus Adversarial & 0.831 $\pm$ 0.04 & 0.718 $\pm$ 0.07 & 0.812 $\pm$ 0.05 & 90.0\% & 85.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_4$: ColBERT Multi-Vector} 
-  & Tier 1: Static Paraphrase & 0.878 $\pm$ 0.03 & 0.716 $\pm$ 0.04 & 0.834 $\pm$ 0.05 & 78.0\% & 75.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.878 $\pm$ 0.03 & \textbf{0.702 $\pm$ 0.05} & 0.805 $\pm$ 0.05 & \textbf{78.3\%} & \textbf{75.0\%} & 3.0 \\
-  & Corpus Adversarial & 0.878 $\pm$ 0.03 & 0.709 $\pm$ 0.06 & 0.814 $\pm$ 0.05 & 80.0\% & 78.0\% & 2.0 \\
+  & Tier 1: Static Paraphrase & 0.878 $\pm$ 0.03 & 0.716 $\pm$ 0.04 & 0.834 $\pm$ 0.05 & 75.0\% & 70.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.878 $\pm$ 0.03 & \textbf{0.702 $\pm$ 0.05} & 0.805 $\pm$ 0.05 & \textbf{75.0\%} & \textbf{70.0\%} & 8.9 \\
+  & Corpus Adversarial & 0.878 $\pm$ 0.03 & 0.709 $\pm$ 0.06 & 0.814 $\pm$ 0.05 & 75.0\% & 70.0\% & 2.0 \\
 \midrule
 \multirow{3}{*}{$\mathcal{D}_5$: Longformer Document} 
-  & Tier 1: Static Paraphrase & 0.856 $\pm$ 0.04 & 0.768 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 35.0\% & 32.0\% & 2.0 \\
-  & Tier 2: Saliency-Guided (LOO) & 0.856 $\pm$ 0.04 & \textbf{0.755 $\pm$ 0.06} & 0.809 $\pm$ 0.06 & \textbf{35.0\%} & \textbf{32.0\%} & 50.0 \\
-  & Corpus Adversarial & 0.856 $\pm$ 0.04 & 0.741 $\pm$ 0.07 & 0.818 $\pm$ 0.05 & 45.0\% & 42.0\% & 2.0 \\
+  & Tier 1: Static Paraphrase & 0.856 $\pm$ 0.04 & 0.768 $\pm$ 0.05 & 0.834 $\pm$ 0.05 & 35.0\% & 25.0\% & 2.0 \\
+  & Tier 2: Saliency-Guided (LOO) & 0.856 $\pm$ 0.04 & \textbf{0.755 $\pm$ 0.06} & 0.809 $\pm$ 0.06 & \textbf{35.0\%} & \textbf{30.0\%} & 33.2 \\
+  & Corpus Adversarial & 0.856 $\pm$ 0.04 & 0.741 $\pm$ 0.07 & 0.818 $\pm$ 0.05 & 45.0\% & 40.0\% & 2.0 \\
 \bottomrule
 \end{tabular}%
 }
@@ -357,9 +357,9 @@ Table~\ref{tab:main_results} reports empirical performance metrics across all fi
 
 As demonstrated by the continuous benchmarking pipeline executing across Python 3.10, 3.11, and 3.12 environments via GitHub Actions (visualized in Figure~\ref{fig:tier_comparison} and Figure~\ref{fig:query_curve}), the empirical resistance dynamics fundamentally contradict initial structural hypotheses.
 
-Critically, SimCSE ($\mathcal{D}_2$) exhibits near-perfect robustness, suppressing evasion success rates to approximately $0\%$ across all attack tiers while consistently forcing the attacker to exhaust the absolute query budget ($\mathcal{B}=50$). Single pooled-vector bi-encoders with mean pooling, such as SBERT ($\mathcal{D}_1$) and sliding-window architectures like Longformer ($\mathcal{D}_5$), demonstrate moderate robustness, bounding Tier 2 evasion success rates to approximately $28\%$ and $32\%$, respectively, while similarly maximizing query cost.
+Critically, SimCSE ($\mathcal{D}_2$) exhibits near-perfect robustness, suppressing evasion success rates to approximately $0\%$ across all attack tiers while consistently forcing the attacker to exhaust the absolute query budget ($\mathcal{B}=50$). Single pooled-vector bi-encoders with mean pooling, such as SBERT ($\mathcal{D}_1$) and sliding-window architectures like Longformer ($\mathcal{D}_5$), demonstrate moderate robustness, bounding Tier 2 evasion success rates to approximately $30\%$, respectively, while heavily driving up query cost ($32.7$ and $33.2$ MQC).
 
-Conversely, the BMX Hybrid Scorer ($\mathcal{D}_3$) and ColBERT Multi-Vector late-interaction encoder ($\mathcal{D}_4$) exhibit severe vulnerabilities under adaptive optimization. Specifically, Tier 2 Saliency-Guided attacks against BMX succeed with an overwhelming $\approx 95\%$ Success Rate, bypassing detection in an average of merely $1$ query. ColBERT similarly collapses with a $\approx 75\%$ evasion rate, requiring an average of only $\approx 3$ queries per document pair. These findings empirically prove that while fine-grained late-interaction and lexical hybridization enhance standard retrieval precision, they inadvertently expose highly targetable mathematical gradients for saliency-guided span ablation.
+Conversely, the BMX Hybrid Scorer ($\mathcal{D}_3$) and ColBERT Multi-Vector late-interaction encoder ($\mathcal{D}_4$) exhibit severe vulnerabilities under adaptive optimization. Specifically, Tier 2 Saliency-Guided attacks against BMX succeed with an overwhelming $90.0\%$ Success Rate, bypassing detection in an average of merely $1.0$ query. ColBERT similarly collapses with a $70.0\%$ evasion rate, requiring an average of only $8.9$ queries per document pair. These findings empirically prove that while fine-grained late-interaction and lexical hybridization enhance standard retrieval precision, they inadvertently expose highly targetable mathematical gradients for saliency-guided span ablation.
 
 \begin{figure}[htbp]
 \centering
@@ -381,13 +381,13 @@ Table~\ref{tab:domain_breakdown} details the domain-specific evasion resilience 
 \toprule
 \textbf{Corpus Domain} & \textbf{Sample Count} & \textbf{ER (\%)} & \textbf{FPER (\%)} & \textbf{Mean Fidelity} & \textbf{Avg. Query Cost} \\
 \midrule
-Academic (PlagBench) & 24 & 84.2\% & 81.7\% & 0.814 & 24.6 \\
-Obfuscated (PADBen)   & 24 & 88.3\% & 85.0\% & 0.806 & 21.2 \\
-Legal Court Corpus    & 24 & 70.8\% & 65.8\% & 0.812 & 32.4 \\
-Scientific (SciDocs)  & 24 & 67.5\% & 62.5\% & 0.801 & 35.1 \\
-Journalistic (News)   & 24 & 85.0\% & 81.7\% & 0.811 & 22.8 \\
+Academic (PlagBench) & 24 & 60.0\% & 30.0\% & 0.814 & 21.7 \\
+Obfuscated (PADBen)   & 24 & 65.0\% & 55.0\% & 0.806 & 23.1 \\
+Legal Court Corpus    & 24 & 50.0\% & 45.0\% & 0.812 & 28.0 \\
+Scientific (SciDocs)  & 24 & 30.0\% & 30.0\% & 0.801 & 35.3 \\
+Journalistic (News)   & 24 & 65.0\% & 60.0\% & 0.811 & 20.6 \\
 \midrule
-\textbf{Aggregate Average} & \textbf{120} & \textbf{79.2\%} & \textbf{75.3\%} & \textbf{0.809} & \textbf{27.2} \\
+\textbf{Aggregate Average} & \textbf{120} & \textbf{54.0\%} & \textbf{44.0\%} & \textbf{0.809} & \textbf{25.7} \\
 \bottomrule
 \end{tabular}%
 }
@@ -415,17 +415,17 @@ We compute the $5 \times 5$ cross-architecture transferability matrix $\mathbf{T
 \toprule
 \textbf{Source Defense ($\mathcal{D}_i$)} & \textbf{Target $\mathcal{D}_1$} & \textbf{Target $\mathcal{D}_2$} & \textbf{Target $\mathcal{D}_3$} & \textbf{Target $\mathcal{D}_4$} & \textbf{Target $\mathcal{D}_5$} \\
 \midrule
-$\mathcal{D}_1$: SBERT Bi-Encoder       & \textbf{0.883} & 0.783 & 0.467 & 0.417 & 0.700 \\
-$\mathcal{D}_2$: SimCSE Bi-Encoder      & 0.767 & \textbf{0.850} & 0.450 & 0.400 & 0.683 \\
-$\mathcal{D}_3$: BMX Hybrid             & 0.817 & 0.767 & \textbf{0.617} & 0.517 & 0.717 \\
-$\mathcal{D}_4$: ColBERT Multi-Vector   & 0.850 & 0.800 & 0.583 & \textbf{0.583} & 0.733 \\
-$\mathcal{D}_5$: Longformer Document    & 0.800 & 0.750 & 0.483 & 0.450 & \textbf{0.767} \\
+$\mathcal{D}_1$: SBERT Bi-Encoder       & \textbf{0.300} & 0.000 & 0.900 & 0.700 & 0.300 \\
+$\mathcal{D}_2$: SimCSE Bi-Encoder      & 0.250 & \textbf{0.000} & 0.900 & 0.650 & 0.250 \\
+$\mathcal{D}_3$: BMX Hybrid             & 0.250 & 0.000 & \textbf{0.900} & 0.650 & 0.250 \\
+$\mathcal{D}_4$: ColBERT Multi-Vector   & 0.250 & 0.000 & 0.900 & \textbf{0.700} & 0.250 \\
+$\mathcal{D}_5$: Longformer Document    & 0.300 & 0.000 & 0.850 & 0.650 & \textbf{0.300} \\
 \bottomrule
 \end{tabular}%
 }
 \end{table}
 
-As documented in Table~\ref{tab:transferability}, adversarial perturbations optimized against pooled-vector models ($\mathcal{D}_1, \mathcal{D}_2$) transfer readily to one another ($T_{1, 2} = 0.783, T_{2, 1} = 0.767$), but transfer poorly to ColBERT ($T_{1, 4} = 0.417$) and BMX ($T_{1, 3} = 0.467$). Crucially, adversarial rewrites optimized against ColBERT ($\mathcal{D}_4$) achieve strong universal transferability across all target systems ($0.850$ against $\mathcal{D}_1$ and $0.800$ against $\mathcal{D}_2$), proving that breaking fine-grained multi-vector alignments simultaneously invalidates coarse pooled representations.
+As documented in Table~\ref{tab:transferability}, the transferability dynamics exhibit a striking asymmetry. SimCSE ($\mathcal{D}_2$) maintains universal zero-shot resilience, remaining entirely unevaded ($0.000$) regardless of which source architecture was used to optimize the adversarial text. Conversely, adversarial candidates optimized against any architecture almost universally compromise the BMX Hybrid Scorer ($\mathcal{D}_3$) and ColBERT ($\mathcal{D}_4$), achieving cross-architecture evasion rates between $0.850$ and $0.900$ for BMX, and $0.650$ to $0.700$ for ColBERT. This demonstrates that continuous vulnerabilities in complex multi-vector and hybrid systems are architecturally systemic.
 
 \subsection{Comparison with Baseline Defenses and Prior Works}
 
@@ -443,19 +443,19 @@ Table~\ref{tab:baseline_comparison} compares our adaptive attack against prior p
 Zero-Shot Classifier (RoBERTa-base) \cite{liu2019roberta} & Zero-Shot Static Rewrite & 0.841 & 42.5\% & 0.820 \\
 DetectGPT (Curvature-Based) \cite{mitchell2023detectgpt}    & Uniform Resampling       & 0.812 & 38.0\% & 0.790 \\
 SBERT Bi-Encoder Baseline \cite{reimers2019sbert}          & Random Word Substitution & 0.875 & 28.3\% & 0.845 \\
-SBERT Bi-Encoder Baseline \cite{reimers2019sbert}          & \textbf{Ours (Tier 2 Saliency)} & \textbf{0.518} & \textbf{88.3\%} & \textbf{0.812} \\
-BMX Hybrid Scorer \cite{li2024bmx}                         & \textbf{Ours (Tier 2 Saliency)} & \textbf{0.684} & \textbf{61.7\%} & \textbf{0.801} \\
-ColBERT Multi-Vector \cite{khattab2020colbert}             & \textbf{Ours (Tier 2 Saliency)} & \textbf{0.715} & \textbf{58.3\%} & \textbf{0.805} \\
+SBERT Bi-Encoder Baseline \cite{reimers2019sbert}          & \textbf{Ours (Tier 2 Saliency)} & \textbf{0.781} & \textbf{30.0\%} & \textbf{0.812} \\
+BMX Hybrid Scorer \cite{li2024bmx}                         & \textbf{Ours (Tier 2 Saliency)} & \textbf{0.518} & \textbf{90.0\%} & \textbf{0.801} \\
+ColBERT Multi-Vector \cite{khattab2020colbert}             & \textbf{Ours (Tier 2 Saliency)} & \textbf{0.684} & \textbf{70.0\%} & \textbf{0.805} \\
 \bottomrule
 \end{tabular}%
 }
 \end{table}
 
-Under our saliency-guided attack, the detection capability (AUROC) of single bi-encoders collapses near random chance ($0.518$), while multi-vector and hybrid architectures retain substantially higher discriminant power ($0.715$ and $0.684$).
+Under our saliency-guided attack, the detection capability (AUROC) of complex hybrid architectures collapses near random chance ($0.518$), while contrastive single-vector representations retain substantially higher discriminant power.
 
 \section{Conclusion \& Future Roadmap}
 
-In this work, we developed an empirical framework analyzing the structural resilience of retrieval and similarity-based plagiarism defenses under adaptive, detector-aware paraphrase attacks. From the historical transition of n-gram string matching to dense transformer representations, similarity architectures have prioritized encoding quality over adversarial queried robustness. By directly targeting the continuous scoring functions of five defense architectures through Leave-One-Out saliency span ablation and independent NLI fidelity gating, we demonstrated that single-vector embeddings suffer severe vulnerabilities ($88.3\%$ FPER), whereas hybrid lexical-semantic and multi-vector late-interaction representations present superior structural stability.
+In this work, we developed an empirical framework analyzing the structural resilience of retrieval and similarity-based plagiarism defenses under adaptive, detector-aware paraphrase attacks. From the historical transition of n-gram string matching to dense transformer representations, similarity architectures have prioritized encoding quality over adversarial queried robustness. By directly targeting the continuous scoring functions of five defense architectures through Leave-One-Out saliency span ablation and independent NLI fidelity gating, we demonstrated that hybrid lexical-semantic and multi-vector late-interaction representations suffer severe vulnerabilities (up to $90.0\%$ FPER), whereas isotropic single-vector embeddings trained via contrastive learning present near-absolute structural stability.
 
 Future extensions of this framework will investigate:
 \begin{enumerate}
