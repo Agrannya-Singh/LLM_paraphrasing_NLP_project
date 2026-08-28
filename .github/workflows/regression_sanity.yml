@@ -1,0 +1,63 @@
+name: Sanity Regression & Full Verification Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  sanity_and_regression_tests:
+    name: Sanity & Regression Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install matplotlib numpy
+
+      - name: Run Sanity & Regression Test Suite
+        run: |
+          python -m unittest tests/test_regression_sanity.py -v
+
+      - name: Run Framework Unit & Integration Tests
+        run: |
+          python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: Regenerate Publication Figures
+        run: |
+          python scripts/generate_plots.py
+
+  compile_latex_to_pdf:
+    name: Compile LaTeX Manuscript to PDF
+    needs: sanity_and_regression_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build LaTeX Document to PDF
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: paper
+          latexmk_use_pdflatex: true
+          args: -pdf -file-line-error -interaction=nonstopmode
+
+      - name: Upload Research Paper PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Adversarial_Plagiarism_Benchmarking_Paper_PDF
+          path: paper/main.pdf
+          retention-days: 60

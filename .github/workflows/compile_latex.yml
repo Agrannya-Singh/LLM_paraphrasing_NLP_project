@@ -1,0 +1,30 @@
+name: Build LaTeX Research Paper to PDF
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX Paper to PDF
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: paper
+          latexmk_use_pdflatex: true
+          args: -pdf -file-line-error -interaction=nonstopmode
+
+      - name: Upload Compiled Research Paper PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Adversarial_Plagiarism_Benchmarking_Paper_PDF
+          path: paper/main.pdf
+          retention-days: 60
