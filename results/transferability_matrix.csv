@@ -1,0 +1,6 @@
+,D1_SBERT,D2_SimCSE,D3_BMX,D4_ColBERT,D5_Longformer
+D1_SBERT,0.4,0.0,0.8,0.7,0.4
+D2_SimCSE,0.4,0.0,0.8,0.7,0.4
+D3_BMX,0.4,0.0,0.8,0.6,0.4
+D4_ColBERT,0.4,0.0,0.8,0.7,0.4
+D5_Longformer,0.4,0.0,0.8,0.7,0.4
