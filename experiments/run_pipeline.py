@@ -111,7 +111,7 @@ def run_evaluation_pipeline(num_pairs: int = None, domain_filter: str = None):
 
     # 2. Instantiate Defense Matrix
     print("\n[Stage 2] Initializing 5-Architecture Defense Matrix (D1-D5)...", flush=True)
-    defenses = load_defense_matrix(threshold=config.detection_threshold)
+    defenses = load_defense_matrix(threshold=None)  # Use per-architecture calibrated thresholds (tau_i) from config.py
     for name, defense in defenses.items():
         print(f"  - {name:18}: {defense.__class__.__name__} (tau={defense.threshold})", flush=True)
 
@@ -216,8 +216,9 @@ def run_evaluation_pipeline(num_pairs: int = None, domain_filter: str = None):
     # 6b. BMX Alpha Sensitivity Sweep Ablation (alpha in {0.3, 0.5, 0.7, 0.9})
     print("\n[Stage 6b] Executing BMX Alpha Sensitivity Ablation Sweep (α ∈ {0.3, 0.5, 0.7, 0.9})...", flush=True)
     bmx_alpha_results = {}
+    bmx_calibrated_tau = config.calibrated_thresholds.get("D3_BMX", config.detection_threshold)
     for alpha_val in config.bmx_alpha_sweep:
-        bmx_sweep_defense = BMXDefense(alpha=alpha_val)
+        bmx_sweep_defense = BMXDefense(alpha=alpha_val, threshold=bmx_calibrated_tau)
         sweep_scores = []
         for p in pairs[:min(20, len(pairs))]:
             cand = p.paraphrases.get("adversarial_paraphrase", p.suspect_text)
@@ -225,7 +226,8 @@ def run_evaluation_pipeline(num_pairs: int = None, domain_filter: str = None):
             sweep_scores.append(sc)
         bmx_alpha_results[f"alpha_{alpha_val}"] = {
             "mean_score": float(np.mean(sweep_scores)),
-            "evasion_rate": float(sum(1 for s in sweep_scores if s < bmx_sweep_defense.threshold) / len(sweep_scores))
+            "evasion_rate": float(sum(1 for s in sweep_scores if s < bmx_sweep_defense.threshold) / len(sweep_scores)),
+            "threshold_used": bmx_calibrated_tau
         }
     print("BMX Alpha Sensitivity Sweep:", bmx_alpha_results)
 

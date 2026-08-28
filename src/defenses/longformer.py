@@ -9,7 +9,7 @@ from transformers import AutoTokenizer, AutoModel
 from .base import DefenseOracle
 
 class LongformerDefense(DefenseOracle):
-    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", threshold: float = 0.75):
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", threshold: float = None):
         super().__init__(name="D5_Longformer", threshold=threshold)
         self.model_name = model_name
         self.device = "cuda" if torch.cuda.is_available() else "cpu"

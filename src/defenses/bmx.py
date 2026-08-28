@@ -13,7 +13,7 @@ from sentence_transformers import SentenceTransformer
 from .base import DefenseOracle
 
 class BMXDefense(DefenseOracle):
-    def __init__(self, dense_model_name: str = "sentence-transformers/all-MiniLM-L6-v2", alpha: float = 0.50, threshold: float = 0.75):
+    def __init__(self, dense_model_name: str = "sentence-transformers/all-MiniLM-L6-v2", alpha: float = 0.50, threshold: float = None):
         super().__init__(name="D3_BMX_Hybrid", threshold=threshold)
         self.alpha = alpha
         self.dense_model = SentenceTransformer(dense_model_name)

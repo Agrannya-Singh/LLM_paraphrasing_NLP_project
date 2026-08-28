@@ -9,7 +9,7 @@ from sentence_transformers import SentenceTransformer
 from .base import DefenseOracle
 
 class SBERTDefense(DefenseOracle):
-    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", threshold: float = 0.75):
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", threshold: float = None):
         super().__init__(name="D1_SBERT", threshold=threshold)
         self.model_name = model_name
         self.model = SentenceTransformer(model_name)

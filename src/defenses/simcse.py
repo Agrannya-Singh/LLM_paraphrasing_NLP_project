@@ -10,7 +10,7 @@ from transformers import AutoTokenizer, AutoModel
 from .base import DefenseOracle
 
 class SimCSEDefense(DefenseOracle):
-    def __init__(self, model_name: str = "princeton-nlp/sup-simcse-bert-base-uncased", threshold: float = 0.75):
+    def __init__(self, model_name: str = "princeton-nlp/sup-simcse-bert-base-uncased", threshold: float = None):
         super().__init__(name="D2_SimCSE", threshold=threshold)
         self.model_name = model_name
         self.device = "cuda" if torch.cuda.is_available() else "cpu"

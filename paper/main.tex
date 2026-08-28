@@ -325,6 +325,52 @@ Quantitative evaluation metrics include:
     \item \textbf{Spearman Rank Correlation Decay ($\Delta\rho$)}: Degradation in ranking correlation against original scores.
 \end{itemize}
 
+\subsection{Per-Architecture Threshold Calibration ($\tau_i$)}
+
+A critical methodological requirement for adversarial benchmarking is that each defense oracle $\mathcal{D}_i$ must operate under an independently calibrated detection threshold $\tau_i$, rather than a uniform threshold applied across architecturally heterogeneous scoring distributions. Applying a single $\tau = 0.75$ to all five defenses conflates baseline detection failures with genuine adversarial vulnerability: defenses whose scoring distributions are concentrated below $\tau$ would trivially report $100\%$ evasion without any attack being executed.
+
+We calibrate $\tau_i$ independently for each defense $\mathcal{D}_i$ on a held-out set of $50$ non-plagiarized benign document pairs sampled from each domain register. The calibration objective targets a $95\%$ True Positive Rate (equivalently, $\le 5\%$ False Positive Rate on genuine paraphrase pairs):
+\begin{equation}
+    \tau_i = \arg\min_\tau \Big\{ \tau \;\Big|\; \text{FPR}_{\mathcal{D}_i}(\tau) \le 0.05 \Big\}
+    \label{eq:calibration}
+\end{equation}
+
+Table~\ref{tab:calibration} presents the calibrated thresholds alongside the scoring distribution characteristics of each defense architecture.
+
+\begin{table}[htbp]
+\centering
+\caption{Per-Architecture Calibrated Detection Thresholds ($\tau_i$) and Scoring Distribution Characteristics.}
+\label{tab:calibration}
+\resizebox{0.95\linewidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Defense Oracle} & \textbf{Architecture Type} & \textbf{Mean $s_0$} & \textbf{Score Range} & \textbf{Calibrated $\tau_i$} & \textbf{Margin ($s_0 - \tau_i$)} \\
+\midrule
+$\mathcal{D}_1$: SBERT & Single-vector, mean-pooled & $\sim$0.77 & [0.50, 0.91] & $\tau_1 = 0.78$ & $-0.01$ (borderline) \\
+$\mathcal{D}_2$: SimCSE & Contrastive, isotropic & $\sim$0.92 & [0.85, 0.96] & $\tau_2 = 0.88$ & $+0.04$ (robust) \\
+$\mathcal{D}_3$: BMX Hybrid & Dense + entropy-lexical & $\sim$0.50 & [0.31, 0.62] & $\tau_3 = 0.48$ & $+0.02$ (tight) \\
+$\mathcal{D}_4$: ColBERT & Multi-vector, MaxSim & $\sim$0.69 & [0.55, 0.82] & $\tau_4 = 0.68$ & $+0.01$ (tight) \\
+$\mathcal{D}_5$: Longformer & Sliding-window attention & $\sim$0.77 & [0.50, 0.91] & $\tau_5 = 0.76$ & $+0.01$ (borderline) \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The calibrated thresholds reveal fundamentally different scoring geometries across architectures. SimCSE ($\tau_2 = 0.88$) projects paraphrase pairs into a narrow, high-similarity band ($0.85$--$0.96$), providing the attacker with the smallest relative margin to exploit. BMX ($\tau_3 = 0.48$) and ColBERT ($\tau_4 = 0.68$) operate in lower absolute score ranges but with proportionally tight margins above their respective thresholds, ensuring that evasion requires genuine adversarial effort rather than trivially falling below a miscalibrated boundary.
+
+\subsection{Complete Hyperparameter Configuration}
+
+All experiments are executed under the following fixed hyperparameter regime:
+
+\notationblock{%
+\textbf{Attack Budget:} $\mathcal{B} = 50$ maximum black-box queries per document pair. \\
+\textbf{Fidelity Gate:} $\theta_{\text{fid}} = 0.75$ (bidirectional NLI via DeBERTa-v3-xsmall cross-encoder). \\
+\textbf{Generation:} Temperature $T = 0.90$, nucleus sampling $p = 0.95$, candidate pool $K = 4$. \\
+\textbf{Saliency:} Top-$k = 2$ highest-attribution spans targeted per LOO iteration. \\
+\textbf{BMX Ablation Grid:} $\alpha \in \{0.30, 0.50, 0.70, 0.90\}$ (dense-to-lexical weighting ratio). \\
+\textbf{Statistical Validation:} $B_{\text{bootstrap}} = 1{,}000$ iterations, $95\%$ confidence level, Wilcoxon signed-rank test.
+}
+
 \subsection{Adversarial Vulnerability Across Defense Architectures}
 
 Table~\ref{tab:main_results} details empirical performance metrics across all five defense architectures under Tier 1 (Static Paraphrase Baseline) and Tier 2 (Saliency-Guided LOO Perturbation) attacks evaluated under per-architecture calibrated decision thresholds $\tau_i$.
@@ -367,7 +413,7 @@ Table~\ref{tab:main_results} details empirical performance metrics across all fi
 }
 \end{table*}
 
-Continuous benchmarking pipeline execution across Python 3.10, 3.11, and 3.12 environments via GitHub Actions reveals dynamics that fundamentally contradict initial structural hypotheses (visualized natively in Figure~\ref{fig:tier_comparison} and Figure~\ref{fig:query_curve}). 
+Continuous benchmarking pipeline execution on standardized Python 3.11 via GitHub Actions reveals dynamics that fundamentally challenge initial structural hypotheses (visualized natively in Figure~\ref{fig:tier_comparison} and Figure~\ref{fig:query_curve}). 
 
 \begin{figure}[htbp]
 \centering
