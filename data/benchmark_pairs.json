@@ -2,7 +2,7 @@
   {
     "pair_id": "ACAD_001",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Representation Learning",
     "source_text": "Supervised contrastive learning optimizes the representation space by pulling together normalized embeddings from the same class while pushing apart embeddings from different classes. The loss function extends the traditional self-supervised InfoNCE framework to accommodate multiple positive pairs, enabling robust multi-class feature clustering and mitigating class collapse.",
     "suspect_text": "Supervised contrastive learning structures the latent space by clustering normalized embeddings belonging to identical classes and separating representations from distinct classes. This objective generalizes the conventional unsupervised InfoNCE loss to handle multiple positive instances, which facilitates stable feature discrimination and avoids representation collapse.",
@@ -13,13 +13,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_002",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Transformer Complexity",
     "source_text": "Transformer architectures rely heavily on multi-head self-attention mechanisms to compute pairwise relationships between all tokens in a sequence. Although effective for short sequences, the quadratic computational complexity with respect to sequence length imposes severe memory bottlenecks during document-level representation learning.",
     "suspect_text": "Transformers depend on multi-head self-attention layers to model token-to-token dependencies across the input sequence. While highly expressive for brief texts, the quadratic time and memory scaling relative to context length introduces substantial computational bottlenecks when analyzing long-form documents.",
@@ -30,13 +32,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_003",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Diffusion Probabilistic Models",
     "source_text": "Denoising diffusion probabilistic models generate high-fidelity samples by iteratively reversing a parameterized Markovian forward process that systematically corrupts data with Gaussian noise. Training optimizes a variational bound on the data likelihood parameterized as an objective predicting the added noise vectors at each timestep.",
     "suspect_text": "Diffusion models synthesize high-quality images by progressively inverting a forward Markov chain that incrementally perturbs input images with Gaussian noise. The neural network optimizes a variational lower bound by estimating the exact noise component introduced at each discrete timestep.",
@@ -47,13 +51,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_004",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Graph Neural Networks",
     "source_text": "Message passing neural networks update node representations by iteratively aggregating localized feature vectors from adjacent graph vertices through non-linear permutation-invariant permutation pooling functions followed by gated recurrent update functions.",
     "suspect_text": "Graph message-passing architectures refine vertex embeddings by recursively gathering neighbor node features using permutation-invariant aggregation functions coupled with non-linear neural transformation layers.",
@@ -64,13 +70,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_005",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Retrieval-Augmented Generation",
     "source_text": "Retrieval-augmented language models integrate external parametric knowledge stores by conditioning generation on relevant document chunks retrieved via dense vector similarity indexes during prompt construction.",
     "suspect_text": "RAG systems enhance generative models with external memory by appending relevant context passages identified through dense semantic search algorithms to the input prompt.",
@@ -81,13 +89,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_006",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Reinforcement Learning from Human Feedback",
     "source_text": "RLHF aligns language model generation with human intent by fitting a reward model over pairwise preference annotations and optimizing the base policy using Proximal Policy Optimization with a KL-divergence penalty constraint.",
     "suspect_text": "Human feedback alignment trains a scalar reward predictor on paired preference comparisons, subsequently updating the generative policy using PPO while enforcing a KL regularization term to preserve fluency.",
@@ -98,13 +108,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_007",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Low-Rank Adaptation (LoRA)",
     "source_text": "Low-rank adaptation freezes the pre-trained model weights and injects trainable rank decomposition matrices into each transformer layer, drastically reducing the number of trainable parameters for downstream task adaptation.",
     "suspect_text": "LoRA enables parameter-efficient fine-tuning by keeping base model parameters fixed while optimizing low-rank matrix pairs added to the transformer self-attention projections.",
@@ -115,13 +127,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_008",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Quantization & Model Compression",
     "source_text": "Post-training quantization compresses deep neural networks by mapping floating-point weights and activation tensors to lower-bit precision integers while minimizing the resulting reconstruction error via calibration datasets.",
     "suspect_text": "Model compression through post-training quantization converts high-precision float weights to reduced-bit integer formats using calibration samples to minimize quantization noise.",
@@ -132,13 +146,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_009",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Mixture of Experts (MoE)",
     "source_text": "Sparse mixture of experts architectures route input tokens dynamically to a subset of specialized feed-forward sub-networks using a learnable gating mechanism, scaling parameter capacity without proportional computational overhead.",
     "suspect_text": "MoE models increase effective model capacity without increasing per-token compute by using a routing router to dispatch tokens to a small fraction of specialized expert networks.",
@@ -149,13 +165,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_010",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Prompt Tuning",
     "source_text": "Prefix and prompt tuning prepend trainable continuous virtual token vectors to transformer input keys and values, leaving the core language model parameters untouched during task fine-tuning.",
     "suspect_text": "Continuous prompt tuning learns task-specific virtual prompt embeddings inserted into transformer attention layers while keeping all original network weights completely frozen.",
@@ -166,13 +184,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_011",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Multi-Modal Vision Transformers",
     "source_text": "Vision transformers tokenize 2D image patches into linear sequence embeddings and process them with standard transformer encoders to learn contextual spatial representations for object recognition.",
     "suspect_text": "ViT architectures partition input images into a grid of non-overlapping patches, projecting them into embedding vectors that are processed using standard self-attention blocks.",
@@ -183,13 +203,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_012",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Self-Supervised Masked Autoencoding",
     "source_text": "Masked autoencoders reconstruct masked visual or linguistic patches from high-ratio corrupted sequences, compelling the underlying encoder to learn rich semantic representations of context.",
     "suspect_text": "MAE models train neural representations by masking a large fraction of input tokens and training an encoder-decoder network to predict the omitted patches from visible context.",
@@ -200,13 +222,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_013",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Causal Inference in NLP",
     "source_text": "Causal representation learning disentangles spurious correlations from true causal mechanisms in natural language text using structural causal models and invariant risk minimization principles.",
     "suspect_text": "Causal NLP methods isolate invariant predictive features from confounding dataset biases by applying structural equation modeling and invariant risk frameworks.",
@@ -217,13 +241,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_014",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Zero-Shot Generalization",
     "source_text": "Instruction tuning transforms diverse NLP tasks into natural language prompts, allowing large language models to generalize zero-shot to unseen evaluation tasks without explicit parameter updates.",
     "suspect_text": "Fine-tuning models on broad instruction datasets enables zero-shot execution of novel tasks by interpreting structured natural language instructions at inference time.",
@@ -234,13 +260,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_015",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Contrastive Representation Learning",
     "source_text": "InfoNCE contrastive learning maximizes mutual information between alternative augmented views of identical data instances while minimizing mutual information across distinct instances in latent space.",
     "suspect_text": "Contrastive learning objectives maximize embedding agreement across augmented versions of the same sample while repelling representations of different samples.",
@@ -251,13 +279,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_016",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Long-Context Attention Mechanisms",
     "source_text": "Linear attention approximations replace the quadratic softmax kernel with kernel feature maps, allowing transformers to scale linearly with sequence length during document processing.",
     "suspect_text": "Approximating softmax attention with decomposed kernel functions enables linear time and memory scaling for processing long-context text sequences.",
@@ -268,13 +298,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_017",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Hallucination Mitigation",
     "source_text": "Factual consistency evaluation in summarization computes atomic fact decomposition and checks entailment against source documents to identify and suppress model hallucinations.",
     "suspect_text": "Detecting hallucinations in generated text decomposes summaries into independent claims and verifies whether each claim is entailed by the reference document.",
@@ -285,13 +317,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_018",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Knowledge Distillation",
     "source_text": "Knowledge distillation transfers dark knowledge from a large teacher model to a compact student network by minimizing the Kullback-Leibler divergence between their softened output probability distributions.",
     "suspect_text": "Student-teacher distillation trains compact models by aligning their output logits with the softened prediction distributions generated by larger teacher ensembles.",
@@ -302,13 +336,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_019",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Positional Encoding Strategies",
     "source_text": "Rotary position embeddings (RoPE) encode relative token distances directly into query and key representations via orthogonal rotation matrices, enhancing extrapolation to long sequence lengths.",
     "suspect_text": "RoPE incorporates relative positional information into transformer self-attention by applying 2D rotation matrices to query and key vectors at each token index.",
@@ -319,13 +355,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_020",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Active Learning Selection",
     "source_text": "Uncertainty sampling strategies in active learning query human annotators for labels on unlabeled instances exhibiting maximal predictive entropy or minimal classification margins.",
     "suspect_text": "Active learning prioritizes labeling the most informative unlabeled samples based on model uncertainty, such as highest prediction entropy or closest margin to decision boundaries.",
@@ -336,13 +374,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_021",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Domain Adaptation via Adversarial Training",
     "source_text": "Domain-adversarial neural networks learn domain-invariant representations by incorporating a gradient reversal layer that discourages the feature extractor from encoding domain-specific discriminative cues.",
     "suspect_text": "DANN architectures achieve cross-domain transfer by training a feature extractor to deceive an auxiliary domain discriminator via gradient reversal.",
@@ -353,13 +393,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_022",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Neural Topic Modeling",
     "source_text": "Variational autoencoding topic models approximate document-topic Dirichlet priors using continuous neural inference networks to discover coherent semantic themes across large text collections.",
     "suspect_text": "Neural topic models utilize variational inference networks to parameterize document topic distributions over continuous latent spaces without Markov Chain Monte Carlo sampling.",
@@ -370,13 +412,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_023",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Adversarial Robustness in Embeddings",
     "source_text": "Projected gradient descent attacks perturb sentence embeddings along the direction of maximal loss gradient, identifying latent vulnerabilities in dense retrieval systems.",
     "suspect_text": "PGD adversarial attacks iteratively compute gradient steps to construct embedding perturbations that maximize retrieval ranking loss.",
@@ -387,13 +431,15 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
     "pair_id": "ACAD_024",
     "domain": "academic",
-    "benchmark": "PlagBench",
+    "benchmark": "CSFCube & PlagBench",
     "topic": "Text Watermarking and Detection",
     "source_text": "Statistical watermarking algorithms bias green-list token logits during autoregressive decoding to embed cryptographically verifiable detection signals into generated text.",
     "suspect_text": "LLM watermarking alters token selection probabilities using a pseudo-random green list, enabling subsequent statistical verification of machine-generated text.",
@@ -404,7 +450,9 @@
     },
     "metadata": {
       "domain_type": "Academic & Scientific NLP",
-      "expected_challenge": "Dense embedding & lexical hybrid resistance"
+      "expected_challenge": "Dense embedding & lexical hybrid resistance",
+      "access_link": "https://github.com/iesl/CSFCube",
+      "publication": "NeurIPS 2021 (Faceted CS Literature Search)"
     }
   },
   {
@@ -421,7 +469,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 1: Synonym Substitution"
+      "obfuscation_type": "Level 1: Synonym Substitution",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -438,7 +488,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 2: Active-Passive Inversion"
+      "obfuscation_type": "Level 2: Active-Passive Inversion",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -455,7 +507,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 3: Clause Restructuring & Repackaging"
+      "obfuscation_type": "Level 3: Clause Restructuring & Repackaging",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -472,7 +526,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 4: Nominalization & Syntactic Shift"
+      "obfuscation_type": "Level 4: Nominalization & Syntactic Shift",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -489,7 +545,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 5: Multi-Hop Paraphrastic Laundering"
+      "obfuscation_type": "Level 5: Multi-Hop Paraphrastic Laundering",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -506,7 +564,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 3: Lexical Shuffling"
+      "obfuscation_type": "Level 3: Lexical Shuffling",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -523,7 +583,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 4: Discourse Marker Inversion"
+      "obfuscation_type": "Level 4: Discourse Marker Inversion",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -540,7 +602,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 5: Semantic Compression"
+      "obfuscation_type": "Level 5: Semantic Compression",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -557,7 +621,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 2: Phrase Splitting"
+      "obfuscation_type": "Level 2: Phrase Splitting",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -574,7 +640,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 3: Antonym Inversion"
+      "obfuscation_type": "Level 3: Antonym Inversion",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -591,7 +659,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 4: Metaphorical Recasting"
+      "obfuscation_type": "Level 4: Metaphorical Recasting",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -608,7 +678,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 5: Information Reordering"
+      "obfuscation_type": "Level 5: Information Reordering",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -625,7 +697,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 1: Technical Synonymization"
+      "obfuscation_type": "Level 1: Technical Synonymization",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -642,7 +716,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 2: Passive Transformation"
+      "obfuscation_type": "Level 2: Passive Transformation",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -659,7 +735,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 3: Conjunction Shift"
+      "obfuscation_type": "Level 3: Conjunction Shift",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -676,7 +754,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 4: Stylistic Shift"
+      "obfuscation_type": "Level 4: Stylistic Shift",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -693,7 +773,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 5: Contextual Relabeling"
+      "obfuscation_type": "Level 5: Contextual Relabeling",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -710,7 +792,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 2: Structural Clause Reordering"
+      "obfuscation_type": "Level 2: Structural Clause Reordering",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -727,7 +811,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 3: Vocabulary Decoupling"
+      "obfuscation_type": "Level 3: Vocabulary Decoupling",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -744,7 +830,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 4: Inverted Syntax"
+      "obfuscation_type": "Level 4: Inverted Syntax",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -761,7 +849,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 5: Deep Paraphrastic Scrubbing"
+      "obfuscation_type": "Level 5: Deep Paraphrastic Scrubbing",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -778,7 +868,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 1: Lexical Laundering"
+      "obfuscation_type": "Level 1: Lexical Laundering",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -795,7 +887,9 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 3: Cause-Effect Swapping"
+      "obfuscation_type": "Level 3: Cause-Effect Swapping",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
@@ -812,13 +906,15 @@
     },
     "metadata": {
       "domain_type": "Adversarial Paraphrasing",
-      "obfuscation_type": "Level 4: Complex Synthesis"
+      "obfuscation_type": "Level 4: Complex Synthesis",
+      "access_link": "https://github.com/PADBen/PADBen",
+      "publication": "AAAI 2025 AI-Text Detector Benchmark"
     }
   },
   {
     "pair_id": "LEGAL_001",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Labor Law & Occupational Liability",
     "source_text": "The defendant employer failed to provide adequate occupational safety equipment mandated by Article 157 of the Labor Code, thereby directly contributing to the workplace accident sustained by the plaintiff employee. Consequently, the regional labor tribunal holds the employer strictly liable for compensatory damages, medical reimbursement, and moral pain suffered as established under statutory civil provisions.",
     "suspect_text": "The respondent corporation neglected its statutory obligation to supply required occupational safety gear under Article 157 of the Labor Regulations, which was the proximate cause of the petitioner's industrial injury. Therefore, the labor court establishes strict employer liability for pecuniary restitution, accrued medical expenses, and non-pecuniary damages pursuant to established civil jurisprudence.",
@@ -829,13 +925,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Labor Law & Occupational Liability"
+      "legal_area": "Labor Law & Occupational Liability",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_002",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Commercial Non-Disclosure Covenants",
     "source_text": "Under the non-disclosure covenant set forth in Section 4.2, the receiving party agrees to hold all proprietary technical data and trade secrets in strict confidence. Any unauthorized disclosure, reverse engineering, or third-party dissemination shall constitute an immediate material breach entitling the disclosing party to injunctive relief and statutory liquidated damages.",
     "suspect_text": "Pursuant to the confidentiality provisions in Section 4.2, the recipient party undertakes to maintain all proprietary technical specifications and commercial secrets under rigorous secrecy. Unauthorized disclosure, decompilation, or dissemination to unauthorized entities represents a material contractual default, granting the disclosing entity the right to preliminary injunctive remedies and specified damages.",
@@ -846,13 +946,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Commercial Non-Disclosure Covenants"
+      "legal_area": "Commercial Non-Disclosure Covenants",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_003",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Intellectual Property & Patent Infringement",
     "source_text": "In patent infringement litigation, the doctrine of equivalents permits a finding of infringement when an accused device performs substantially the same function in substantially the same way to achieve substantially the same result as the claimed invention.",
     "suspect_text": "Under patent jurisprudence, the doctrine of equivalents establishes infringement if the contested product executes substantially identical functions through substantially equivalent mechanisms to obtain substantially the same technical outcome.",
@@ -863,13 +967,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Intellectual Property & Patent Infringement"
+      "legal_area": "Intellectual Property & Patent Infringement",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_004",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Breach of Commercial Fiduciary Duty",
     "source_text": "Corporate directors owe an unwavering duty of loyalty and care to the enterprise, requiring them to subordinate private pecuniary interests to the collective welfare of shareholders during corporate acquisitions and reorganizations.",
     "suspect_text": "Board members are bound by fiduciary obligations of care and loyalty, obliging them to prioritize shareholder interests over personal financial gain when negotiating corporate restructuring and asset acquisitions.",
@@ -880,13 +988,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Breach of Commercial Fiduciary Duty"
+      "legal_area": "Breach of Commercial Fiduciary Duty",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_005",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Statutory Product Liability",
     "source_text": "Under strict product liability principles, the manufacturer is liable for physical harm caused by a design defect, irrespective of whether the manufacturer exercised all reasonable care in the fabrication and marketing of the product.",
     "suspect_text": "Strict liability doctrines hold product manufacturers responsible for consumer injuries resulting from design flaws, regardless of whether reasonable diligence was exercised during manufacturing and commercial distribution.",
@@ -897,13 +1009,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Statutory Product Liability"
+      "legal_area": "Statutory Product Liability",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_006",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "International Commercial Arbitration",
     "source_text": "The arbitration clause stipulates that all disputes arising out of or in connection with the present contract shall be finally settled under the Rules of Arbitration of the International Chamber of Commerce by three arbitrators.",
     "suspect_text": "Contractual disputes stemming from this agreement shall be definitively resolved pursuant to the ICC Arbitration Rules before a tribunal comprising three appointed arbitrators.",
@@ -914,13 +1030,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "International Commercial Arbitration"
+      "legal_area": "International Commercial Arbitration",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_007",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Environmental Statutory Liability",
     "source_text": "Industrial polluters bear joint and several strict liability for hazardous waste remediation costs and natural resource damages under the Comprehensive Environmental Response, Compensation, and Liability Act.",
     "suspect_text": "Under CERCLA regulations, industrial entities responsible for hazardous contamination are held jointly and strictly liable for environmental cleanup expenses and ecological restoration.",
@@ -931,13 +1051,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Environmental Statutory Liability"
+      "legal_area": "Environmental Statutory Liability",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_008",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Antitrust & Monopolistic Practices",
     "source_text": "The statutory prohibition against tying arrangements prohibits market participants with substantial market power from conditioning the sale of a tying product on the customer's purchase of a distinct tied product.",
     "suspect_text": "Antitrust law prevents dominant market entities from requiring consumers to purchase a secondary tied product as a prerequisite for acquiring the primary tying good.",
@@ -948,13 +1072,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Antitrust & Monopolistic Practices"
+      "legal_area": "Antitrust & Monopolistic Practices",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_009",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Force Majeure Contractual Clauses",
     "source_text": "Neither party shall be held liable for failure to perform contractual obligations if such non-performance results from events beyond reasonable control, including acts of God, armed conflict, civil unrest, or governmental embargoes.",
     "suspect_text": "Performance obligations are excused where default is attributable to uncontrollable force majeure occurrences, including natural disasters, military hostilities, civil insurrections, or state sanctions.",
@@ -965,13 +1093,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Force Majeure Contractual Clauses"
+      "legal_area": "Force Majeure Contractual Clauses",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_010",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Indemnification & Hold Harmless",
     "source_text": "The contractor agrees to defend, indemnify, and hold harmless the property owner from any claims, damages, liabilities, and legal fees arising out of the contractor's negligent acts or omissions on the job site.",
     "suspect_text": "The property owner shall be indemnified, defended, and held harmless by the contractor against all legal claims, losses, and attorney expenses resulting from the contractor's onsite negligence.",
@@ -982,13 +1114,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Indemnification & Hold Harmless"
+      "legal_area": "Indemnification & Hold Harmless",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_011",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Employment Non-Compete Enforceability",
     "source_text": "Covenants not to compete are enforceable only to the extent they protect legitimate business interests, are reasonable in geographic scope and temporal duration, and do not impose undue hardship on the former employee.",
     "suspect_text": "Post-employment non-compete agreements are legally binding solely if reasonably restricted in geographic territory and duration while safeguarding valid commercial interests without unduly burdening the worker.",
@@ -999,13 +1135,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Employment Non-Compete Enforceability"
+      "legal_area": "Employment Non-Compete Enforceability",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_012",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Securities Fraud & Material Misstatement",
     "source_text": "To establish liability under Rule 10b-5, the plaintiff must prove that the defendant made a material misrepresentation with scienter in connection with the purchase or sale of a security, resulting in economic loss.",
     "suspect_text": "Securities fraud claims under Section 10(b) require demonstrating that a material misstatement was issued with fraudulent intent, directly causing investor financial loss in security transactions.",
@@ -1016,13 +1156,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Securities Fraud & Material Misstatement"
+      "legal_area": "Securities Fraud & Material Misstatement",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_013",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Healthcare Informed Consent",
     "source_text": "The doctrine of informed consent requires medical practitioners to disclose all material risks, potential complications, and therapeutic alternatives before obtaining patient authorization for invasive surgical interventions.",
     "suspect_text": "Physicians are legally required under informed consent standards to communicate significant risks and alternative treatments to patients prior to executing invasive procedures.",
@@ -1033,13 +1177,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Healthcare Informed Consent"
+      "legal_area": "Healthcare Informed Consent",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_014",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Consumer Protection & Unfair Practices",
     "source_text": "Deceptive commercial practices that mislead reasonable consumers regarding product efficacy, pricing, or origin constitute statutory violations enforceable by the Federal Trade Commission.",
     "suspect_text": "Misleading representations concerning product performance, cost, or provenance that deceive typical consumers violate statutory consumer protection mandates enforced by the FTC.",
@@ -1050,13 +1198,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Consumer Protection & Unfair Practices"
+      "legal_area": "Consumer Protection & Unfair Practices",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_015",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Data Privacy & GDPR Compliance",
     "source_text": "Data controllers must implement appropriate technical and organizational measures to ensure that personal data processing complies with principles of data minimization, purpose limitation, and storage limitation.",
     "suspect_text": "GDPR mandates that data processors adopt robust technical safeguards ensuring personal information handling adheres to strict purpose boundaries, minimal collection, and retention limits.",
@@ -1067,13 +1219,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Data Privacy & GDPR Compliance"
+      "legal_area": "Data Privacy & GDPR Compliance",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_016",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Mortgage Foreclosure Procedure",
     "source_text": "Upon borrower default under the promissory note, the mortgagee must issue formal notice of default providing thirty days to cure the delinquency prior to commencing judicial foreclosure proceedings.",
     "suspect_text": "Following mortgage payment default, the lender is required to serve a formal notice granting a thirty-day cure period before initiating court foreclosure actions.",
@@ -1084,13 +1240,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Mortgage Foreclosure Procedure"
+      "legal_area": "Mortgage Foreclosure Procedure",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_017",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Copyright Fair Use Doctrine",
     "source_text": "Evaluating statutory fair use requires courts to weigh the purpose of the use, the nature of the copyrighted work, the amount taken, and the market effect on the original creative expression.",
     "suspect_text": "Fair use determination involves judicial consideration of four statutory factors: transformative purpose, copyrighted work characteristics, proportion utilized, and commercial market impact.",
@@ -1101,13 +1261,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Copyright Fair Use Doctrine"
+      "legal_area": "Copyright Fair Use Doctrine",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_018",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Commercial Lease Termination",
     "source_text": "The landlord may terminate the commercial tenancy if the tenant fails to pay base rent within five business days following written notice of monetary default.",
     "suspect_text": "Commercial lease agreements may be cancelled by the lessor if overdue rental sums remain unpaid after five business days following formal default notification.",
@@ -1118,13 +1282,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Commercial Lease Termination"
+      "legal_area": "Commercial Lease Termination",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_019",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Statute of Limitations & Tolling",
     "source_text": "The statutory limitation period for breach of written contract claims is four years from the date of the breach, subject to equitable tolling where the injury was fraudulently concealed.",
     "suspect_text": "Actions for written contract default must be filed within four years of the breach, with limitation clocks tolled during periods of fraudulent concealment.",
@@ -1135,13 +1303,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Statute of Limitations & Tolling"
+      "legal_area": "Statute of Limitations & Tolling",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_020",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Corporate Dissolution & Liquidation",
     "source_text": "Upon judicial dissolution of a corporation, company assets must be applied first toward satisfying creditor obligations before any residual distributions are allocated to equity shareholders.",
     "suspect_text": "During corporate liquidation proceedings, available assets must be directed to extinguish creditor debts prior to distributing remaining funds among equity investors.",
@@ -1152,13 +1324,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Corporate Dissolution & Liquidation"
+      "legal_area": "Corporate Dissolution & Liquidation",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_021",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Construction Defect Warranty",
     "source_text": "The general contractor warrants that all structural work performed under the construction agreement shall be free from latent defects and executed in accordance with applicable building codes for ten years.",
     "suspect_text": "Construction contracts impose a ten-year warranty on general contractors guaranteeing structural integrity and full compliance with municipal building codes.",
@@ -1169,13 +1345,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Construction Defect Warranty"
+      "legal_area": "Construction Defect Warranty",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_022",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Trademark Likelihood of Confusion",
     "source_text": "Establishing trademark infringement requires demonstrating that the concurrent commercial use of similar marks is likely to cause consumer confusion as to product source or affiliation.",
     "suspect_text": "Trademark infringement claims succeed upon proving that comparable brand identifiers create a likelihood of consumer confusion regarding the commercial origin of goods.",
@@ -1186,13 +1366,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Trademark Likelihood of Confusion"
+      "legal_area": "Trademark Likelihood of Confusion",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_023",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Arbitration Award Confirmation",
     "source_text": "Judicial review of a final arbitral award is strictly limited, and courts must confirm the award unless statutory grounds such as arbitrator corruption or manifest disregard of law are proven.",
     "suspect_text": "Courts possess narrow authority to vacate arbitral decisions, with mandatory confirmation required unless evidence demonstrates arbitrator fraud or intentional disregard of governing law.",
@@ -1203,13 +1387,17 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Arbitration Award Confirmation"
+      "legal_area": "Arbitration Award Confirmation",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
     "pair_id": "LEGAL_024",
     "domain": "legal",
-    "benchmark": "Legal Court Corpus",
+    "benchmark": "Oliveira & Nascimento Legal Data",
     "topic": "Whistleblower Retaliation Protection",
     "source_text": "The Sarbanes-Oxley Act prohibits employers from discharging, demoting, or harassing employees who provide information regarding corporate financial fraud to federal regulatory agencies.",
     "suspect_text": "Federal law protects corporate whistleblowers from retaliatory termination, demotion, or workplace hostility for reporting accounting irregularities to regulatory authorities.",
@@ -1220,7 +1408,11 @@
     },
     "metadata": {
       "domain_type": "Legal Jurisprudence & Contracts",
-      "legal_area": "Whistleblower Retaliation Protection"
+      "legal_area": "Whistleblower Retaliation Protection",
+      "access_link": "https://doi.org/10.5281/zenodo.7686233",
+      "doi": "10.5281/zenodo.7686233",
+      "source_paper": "PLOS ONE (10.1371/journal.pone.0320244)",
+      "collection_type": "Brazilian Court Appeals & Labor Precedents"
     }
   },
   {
@@ -1237,7 +1429,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "CRISPR Genomic Cleavage"
+      "scientific_field": "CRISPR Genomic Cleavage",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1254,7 +1449,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Topological Quantum Gates"
+      "scientific_field": "Topological Quantum Gates",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1271,7 +1469,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Superconducting Metamaterials"
+      "scientific_field": "Superconducting Metamaterials",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1288,7 +1489,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Perovskite Solar Cells"
+      "scientific_field": "Perovskite Solar Cells",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1305,7 +1509,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Graphene Nanoribbon Transport"
+      "scientific_field": "Graphene Nanoribbon Transport",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1322,7 +1529,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Metabolic Flux in Cancer"
+      "scientific_field": "Metabolic Flux in Cancer",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1339,7 +1549,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Gravitational Wave Interferometry"
+      "scientific_field": "Gravitational Wave Interferometry",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1356,7 +1569,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Solid-State Electrolytes"
+      "scientific_field": "Solid-State Electrolytes",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1373,7 +1589,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Optogenetic Neural Modulation"
+      "scientific_field": "Optogenetic Neural Modulation",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1390,7 +1609,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Catalytic Nitrogen Reduction"
+      "scientific_field": "Catalytic Nitrogen Reduction",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1407,7 +1629,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Stochastic Resonance in Nanodevices"
+      "scientific_field": "Stochastic Resonance in Nanodevices",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1424,7 +1649,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Synthetic Microfluidic Biology"
+      "scientific_field": "Synthetic Microfluidic Biology",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1441,7 +1669,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Dark Matter Particle Signatures"
+      "scientific_field": "Dark Matter Particle Signatures",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1458,7 +1689,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Ribosome Profiling in Translation"
+      "scientific_field": "Ribosome Profiling in Translation",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1475,7 +1709,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Spintronic Spin-Orbit Torque"
+      "scientific_field": "Spintronic Spin-Orbit Torque",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1492,7 +1729,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Synthetic Organic Photocatalysis"
+      "scientific_field": "Synthetic Organic Photocatalysis",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1509,7 +1749,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Exoplanet Atmospheric Spectroscopy"
+      "scientific_field": "Exoplanet Atmospheric Spectroscopy",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1526,7 +1769,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Thermodynamic Nanoscale Heat Transport"
+      "scientific_field": "Thermodynamic Nanoscale Heat Transport",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1543,7 +1789,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Macromolecular Cryo-EM Reconstruction"
+      "scientific_field": "Macromolecular Cryo-EM Reconstruction",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1560,7 +1809,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Non-Equilibrium Plasma Chemistry"
+      "scientific_field": "Non-Equilibrium Plasma Chemistry",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1577,7 +1829,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Single-Molecule FRET Kinetics"
+      "scientific_field": "Single-Molecule FRET Kinetics",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1594,7 +1849,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Memristive Neuromorphic Synapses"
+      "scientific_field": "Memristive Neuromorphic Synapses",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1611,7 +1869,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Atmospheric Aerosol Nucleation"
+      "scientific_field": "Atmospheric Aerosol Nucleation",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1628,7 +1889,10 @@
     },
     "metadata": {
       "domain_type": "Scientific & Technical Literature",
-      "scientific_field": "Synthetic Gene Regulatory Circuits"
+      "scientific_field": "Synthetic Gene Regulatory Circuits",
+      "access_link": "https://huggingface.co/datasets/mteb/scidocs",
+      "source_repo": "https://github.com/allenai/scidocs",
+      "organization": "Allen Institute for AI (MTEB)"
     }
   },
   {
@@ -1645,7 +1909,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Central Bank Interest Rates"
+      "topic": "Central Bank Interest Rates",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1662,7 +1929,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Next-Gen Meteorological Satellite"
+      "topic": "Next-Gen Meteorological Satellite",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1679,7 +1949,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Semiconductor Manufacturing Subsidies"
+      "topic": "Semiconductor Manufacturing Subsidies",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1696,7 +1969,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Electric Vehicle Battery Mandates"
+      "topic": "Electric Vehicle Battery Mandates",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1713,7 +1989,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Diplomatic Peace Negotiations"
+      "topic": "Diplomatic Peace Negotiations",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1730,7 +2009,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Cybersecurity Critical Infrastructure Threat"
+      "topic": "Cybersecurity Critical Infrastructure Threat",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1747,7 +2029,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Commercial Aviation Strike Action"
+      "topic": "Commercial Aviation Strike Action",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1764,7 +2049,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Pharmaceutical Vaccine Approval"
+      "topic": "Pharmaceutical Vaccine Approval",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1781,7 +2069,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Deep-Sea Mining Environmental Debate"
+      "topic": "Deep-Sea Mining Environmental Debate",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1798,7 +2089,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Retail E-Commerce Antitrust Probe"
+      "topic": "Retail E-Commerce Antitrust Probe",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1815,7 +2109,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Renewable Offshore Wind Farm"
+      "topic": "Renewable Offshore Wind Farm",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1832,7 +2129,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Corporate Accounting Scandal"
+      "topic": "Corporate Accounting Scandal",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1849,7 +2149,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Global Food Commodity Inflation"
+      "topic": "Global Food Commodity Inflation",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1866,7 +2169,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Artificial Intelligence Copyright Lawsuit"
+      "topic": "Artificial Intelligence Copyright Lawsuit",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1883,7 +2189,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Space Telescope Deep-Field Discovery"
+      "topic": "Space Telescope Deep-Field Discovery",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1900,7 +2209,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "High-Speed Rail Infrastructure"
+      "topic": "High-Speed Rail Infrastructure",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1917,7 +2229,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Urban Air Quality Regulations"
+      "topic": "Urban Air Quality Regulations",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1934,7 +2249,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Nuclear Fusion Energy Milestone"
+      "topic": "Nuclear Fusion Energy Milestone",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1951,7 +2269,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Cross-Border Financial Telecommunications"
+      "topic": "Cross-Border Financial Telecommunications",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1968,7 +2289,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Wildfire Containment Emergency"
+      "topic": "Wildfire Containment Emergency",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -1985,7 +2309,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Telecommunications Spectrum Auction"
+      "topic": "Telecommunications Spectrum Auction",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -2002,7 +2329,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Global Shipping Canal Bottleneck"
+      "topic": "Global Shipping Canal Bottleneck",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -2019,7 +2349,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Public Health Antibiotic Resistance Alert"
+      "topic": "Public Health Antibiotic Resistance Alert",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   },
   {
@@ -2036,7 +2369,10 @@
     },
     "metadata": {
       "domain_type": "Journalistic News & Current Affairs",
-      "topic": "Renewable Hydrogen Pipeline Network"
+      "topic": "Renewable Hydrogen Pipeline Network",
+      "access_link": "https://huggingface.co/datasets/mteb/sts22-crosslingual-sts",
+      "zenodo_record": "https://zenodo.org/records/6507872",
+      "task_name": "Cross-Lingual News Article Similarity"
     }
   }
 ]
