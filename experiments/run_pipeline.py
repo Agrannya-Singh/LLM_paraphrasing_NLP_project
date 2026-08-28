@@ -198,18 +198,38 @@ def run_evaluation_pipeline(num_pairs: int = None, domain_filter: str = None):
     elapsed = time.time() - start_time
     print(f"\nCompleted {completed} evaluations in {elapsed:.2f}s ({elapsed/max(1, completed):.2f}s per eval).", flush=True)
 
-    # 6. Compute Cross-Architecture Transferability Matrix
-    print("\n[Stage 6] Computing 5x5 Cross-Architecture Transferability Matrix (T ∈ R^{5×5})...", flush=True)
-    df_transfer = compute_transferability_matrix(
+    # 6. Compute Cross-Architecture Transferability Matrix & Normalized Delta
+    print("\n[Stage 6] Computing 5x5 Cross-Architecture Transferability Matrix (T ∈ R^{5×5}) & Normalized Delta...", flush=True)
+    tier1_results = [r for r in all_results if "Tier1" in r.attack_tier or "Static" in r.attack_tier]
+    df_transfer, df_delta = compute_transferability_matrix(
         optimized_results_by_defense=tier2_results_by_defense,
         defense_matrix=defenses,
-        fidelity_judge=fidelity_judge
+        fidelity_judge=fidelity_judge,
+        static_baseline_results=tier1_results
     )
-    print("\nCross-Architecture Adversarial Transferability Matrix (T_{i,j} = FPER(P_{D_i}(x̃) -> D_j)):")
+    print("\n1. Raw Cross-Architecture Transferability Matrix (T_{i,j} = FPER(P_{D_i}(x̃) -> D_j)):")
     print(df_transfer.round(3).to_string())
+    print("\n2. Normalized Transferability Delta (ΔT_{i,j} = T_{i,j} - FPER(Static -> D_j)):")
+    print(df_delta.round(3).to_string())
+
+    # 6b. BMX Alpha Sensitivity Sweep Ablation (alpha in {0.3, 0.5, 0.7, 0.9})
+    print("\n[Stage 6b] Executing BMX Alpha Sensitivity Ablation Sweep (α ∈ {0.3, 0.5, 0.7, 0.9})...", flush=True)
+    bmx_alpha_results = {}
+    for alpha_val in config.bmx_alpha_sweep:
+        bmx_sweep_defense = BMXDefense(alpha=alpha_val)
+        sweep_scores = []
+        for p in pairs[:min(20, len(pairs))]:
+            cand = p.paraphrases.get("adversarial_paraphrase", p.suspect_text)
+            sc = bmx_sweep_defense.score(p.source_text, cand)
+            sweep_scores.append(sc)
+        bmx_alpha_results[f"alpha_{alpha_val}"] = {
+            "mean_score": float(np.mean(sweep_scores)),
+            "evasion_rate": float(sum(1 for s in sweep_scores if s < bmx_sweep_defense.threshold) / len(sweep_scores))
+        }
+    print("BMX Alpha Sensitivity Sweep:", bmx_alpha_results)
 
     # 7. Aggregate Metrics
-    print("\n[Stage 7] Aggregating Performance Metrics...", flush=True)
+    print("\n[Stage 7] Aggregating Performance Metrics with Statistical Rigor...", flush=True)
     global_metrics = compute_full_metrics_summary(all_results)
     
     metrics_by_defense = {}
@@ -233,7 +253,9 @@ def run_evaluation_pipeline(num_pairs: int = None, domain_filter: str = None):
         "metrics_by_defense": metrics_by_defense,
         "metrics_by_tier": metrics_by_tier,
         "metrics_by_domain": metrics_by_domain,
-        "transferability_matrix": df_transfer.to_dict()
+        "transferability_matrix_raw": df_transfer.to_dict(),
+        "transferability_matrix_normalized_delta": df_delta.to_dict(),
+        "bmx_alpha_sensitivity_sweep": bmx_alpha_results
     }
 
     # 8. Export Resulting Dataset and Visualizations

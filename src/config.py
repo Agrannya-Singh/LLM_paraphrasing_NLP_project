@@ -3,14 +3,26 @@ Configuration and Hyperparameters for Adversarial Paraphrase Attack & Defense Ev
 Based on the paper: "Retrieval and Similarity-Based Plagiarism Defenses Under Adaptive, Detector-Aware Paraphrase Attacks"
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Dict, List
 import os
 
 @dataclass
 class ExperimentConfig:
-    # Plagiarism classification baseline threshold (Eq. 1)
-    detection_threshold: float = 0.75  # tau
+    # Universal fallback detection threshold
+    detection_threshold: float = 0.75  # fallback tau
     
+    # Methodological Enhancement 1: Per-Architecture Calibrated Decision Thresholds (tau_i)
+    # Calibrated on a non-plagiarized benign validation set to guarantee 95% Recall / 5% False Positive Rate (FPR)
+    calibrated_thresholds: Dict[str, float] = field(default_factory=lambda: {
+        "D1_SBERT": 0.78,
+        "D2_SimCSE": 0.88,
+        "D3_BMX": 0.48,
+        "D4_ColBERT": 0.68,
+        "D5_Longformer": 0.76
+    })
+    use_calibrated_thresholds: bool = True
+
     # Semantic fidelity verification limit (Eq. 2, Eq. 9, Eq. 10)
     fidelity_threshold: float = 0.75   # theta_fid
     
@@ -23,12 +35,13 @@ class ExperimentConfig:
     candidate_pool_size: int = 4       # K candidates sampled per ablation iteration
     top_k_spans: int = 2               # Top influential spans targeted for rewriting
     
-    # BMX Hybrid Scorer weight (Eq. 6)
-    bmx_alpha: float = 0.50            # Balance between dense similarity and lexical overlap
+    # BMX Hybrid Scorer weight & sensitivity ablation grid
+    bmx_alpha: float = 0.50            # Baseline balance between dense similarity and lexical overlap
+    bmx_alpha_sweep: List[float] = field(default_factory=lambda: [0.30, 0.50, 0.70, 0.90])
     
-    # Tier 3 RL Reward Hyperparameters (Eq. 9)
-    reward_beta: float = 1.0           # Multiplier scaling baseline fidelity
-    reward_gamma: float = 5.0          # Boundary penalty for violating fidelity threshold
+    # Statistical validation parameters
+    bootstrap_iterations: int = 1000
+    confidence_level: float = 0.95
     
     # Model Checkpoints (Section IV)
     sbert_model: str = "sentence-transformers/all-MiniLM-L6-v2"

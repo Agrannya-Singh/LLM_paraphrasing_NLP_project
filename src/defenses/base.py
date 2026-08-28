@@ -1,18 +1,31 @@
 """
 Abstract Base Defense Oracle.
-Defines the black-box interface, query tracker, and binary detection threshold evaluator.
+Defines the black-box interface, query tracker, and calibrated binary detection threshold evaluator.
 """
 
 from abc import ABC, abstractmethod
 from typing import Tuple
+from src.config import config
 
 class DefenseOracle(ABC):
     """
     Abstract Base Class for Black-Box Continuous Similarity Plagiarism Defenses.
+    Supports both universal and independently calibrated decision thresholds (tau_i).
     """
-    def __init__(self, name: str, threshold: float = 0.75):
+    def __init__(self, name: str, threshold: float = None):
         self.name = name
-        self.threshold = threshold
+        if threshold is None:
+            if config.use_calibrated_thresholds:
+                matched_tau = None
+                for key, val in config.calibrated_thresholds.items():
+                    if key == name or key in name or name in key:
+                        matched_tau = val
+                        break
+                self.threshold = matched_tau if matched_tau is not None else config.detection_threshold
+            else:
+                self.threshold = config.detection_threshold
+        else:
+            self.threshold = threshold
         self.query_count = 0
 
     def reset_query_count(self):
@@ -38,7 +51,7 @@ class DefenseOracle(ABC):
 
     def classify(self, source_text: str, candidate_text: str) -> Tuple[bool, float]:
         """
-        Evaluates binary decision ŷ = I[S(x, x̃) >= tau] and returns (is_plagiarized, similarity_score).
+        Evaluates binary decision ŷ = I[S(x, x̃) >= tau_i] and returns (is_plagiarized, similarity_score).
         """
         score = self.score(source_text, candidate_text)
         is_plag = score >= self.threshold

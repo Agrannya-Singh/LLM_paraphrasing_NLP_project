@@ -118,11 +118,12 @@ class TestSanityRegression(unittest.TestCase):
         self.assertIn("\\begin{algorithm}", tex, "Algorithm block missing")
         self.assertIn("\\label{alg:saliency_attack}", tex, "Algorithm label alg:saliency_attack missing")
         
-        # Tables 1 to 4
+        # Tables 1 to 5
         self.assertIn("\\label{tab:main_results}", tex, "Table 1 (main_results) missing")
         self.assertIn("\\label{tab:domain_breakdown}", tex, "Table 2 (domain_breakdown) missing")
         self.assertIn("\\label{tab:transferability}", tex, "Table 3 (transferability) missing")
-        self.assertIn("\\label{tab:baseline_comparison}", tex, "Table 4 (baseline_comparison) missing")
+        self.assertIn("\\label{tab:bmx_ablation}", tex, "Table 4 (bmx_ablation) missing")
+        self.assertIn("\\label{tab:baseline_comparison}", tex, "Table 5 (baseline_comparison) missing")
 
     def test_07_latex_bibliography_citations_count(self):
         """Ensures at least 20 academic references exist in the bibliography as per guidelines."""
