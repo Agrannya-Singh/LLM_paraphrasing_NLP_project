@@ -1,0 +1,472 @@
+\documentclass[conference,onecolumn,11pt]{IEEEtran}
+
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage[hidelinks,colorlinks=false]{hyperref}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, calc, shapes.geometric, decorations.pathreplacing, backgrounds, automata, shadows}
+
+\usepackage[most]{tcolorbox}
+\newtcolorbox{notationbox}{
+  enhanced, breakable,
+  colback=black!2, colframe=black!10,
+  borderline west={1.5pt}{0pt}{black},
+  boxrule=0pt, arc=0pt, outer arc=0pt,
+  left=8pt, right=8pt, top=4pt, bottom=4pt,
+  fontupper=\footnotesize
+}
+\newcommand{\notationblock}[1]{\begin{notationbox}#1\end{notationbox}}
+
+\begin{document}
+
+\title{Retrieval and Similarity-Based Plagiarism Defenses Under Adaptive, Detector-Aware Paraphrase Attacks}
+
+
+\maketitle
+
+\begin{abstract}
+Automated plagiarism detection demands semantic evaluation over surface-level lexical matching. Large language models synthesize evasive paraphrases capable of bypassing conventional detection filters. This manuscript investigates the structural stability of modern retrieval and similarity-based plagiarism defenses against adaptive, detector-aware adversarial attacks. We develop a saliency-guided paraphrase algorithm that optimizes iterative perturbations directly against the continuous similarity scores of target defense systems. We evaluate this mechanism against a five-architecture defense matrix comprising SBERT, SimCSE, BMX, a multi-vector late-interaction model, and Longformer. Our methodology enforces a strict semantic fidelity boundary to decouple mathematical evasion success from semantic degradation. We assess evasion rates, cross-architecture transferability, and the query complexity required to bypass detection thresholds across academic, legal, and journalistic domains.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Plagiarism Detection, Adversarial Paraphrasing, Semantic Similarity, Transformer Encoders, Natural Language Processing.
+\end{IEEEkeywords}
+
+\section{Introduction \& Background}
+
+Plagiarism detection requires contextual analysis instead of direct string matching. Large language models (LLMs) generate complex paraphrases that alter syntax while maintaining core semantics. Identifying these modifications relies heavily on natural language processing. Retrieval and similarity-based defense systems establish the foundation for modern content-deduplication and academic integrity networks. These systems primarily utilize transformer encoders and sentence-embedding architectures such as Sentence-BERT and SimCSE. %[cite: 4]
+
+The mechanisms securing these systems simultaneously expose a measurable vulnerability. An adversary can iteratively prompt an LLM to paraphrase specific flagged text spans. This sequential perturbation pushes the continuous similarity score below a binary detection threshold while preserving the original meaning. Adaptive evasion creates a mathematically harder detection challenge than static rewriting. Researchers currently lack empirical data verifying whether deployed defense architectures can survive these targeted optimization loops. %[cite: 4]
+
+Defense architectures exhibit significant structural variance. Sentence-BERT employs a siamese bi-encoder topology. SimCSE generates isotropic embedding structures via contrastive learning without labeled entailment data. BMX integrates entropy-weighted lexical signals with dense semantic search to overcome the limitations of isolated embedding models. Multi-vector models enable fine-grained token-level document matching. Longformer extends similarity modeling to full-length documents by eliminating standard sequence truncation constraints. %[cite: 4]
+
+Adversarial evaluation benchmarks demonstrate high evasion success rates against zero-shot classifier detectors. Empirical trials show that LLM-generated plagiarism triggers detection reliably, but iterative human-AI obfuscation severely degrades classifier accuracy. Saliency-guided adversarial perturbations target highly influential spans efficiently compared to uniform random resampling. Existing evasion benchmarks evaluate attacks strictly against classifier-style detectors. They ignore the continuous retrieval and similarity-based architectures utilized in production environments. %[cite: 4]
+
+We engineer an adaptive, detector-aware paraphrase attack aimed directly at the continuous scoring functions of similarity defenses. We test five public defense systems in their default pre-trained states. We apply no adversarial retraining to the defense parameters. The LLM generates a candidate paraphrase. The target defender issues a continuous similarity score. If the document exceeds the detection threshold, we execute a saliency ablation analysis to isolate the specific tokens driving the similarity computation. The LLM then rewrites those isolated spans. This optimization loop executes within a strict query budget. We verify semantic fidelity independently at each step. An attack succeeds only if it drops the similarity score below the detection threshold and simultaneously satisfies a baseline semantic preservation constraint.
+
+The primary contributions of this work include:
+\begin{itemize}
+    \item We define an adaptive, detector-aware paraphrase attack combining saliency-guided span ablation with feedback-driven rejection sampling.
+    \item We construct a five-architecture defense matrix covering SBERT, SimCSE, BMX, a multi-vector model, and Longformer. We evaluate the attack sequence against all five systems to isolate architectural stability.
+    \item We map attack transferability across architectures without white-box gradient access. We report the results as a unified evasion-rate transferability matrix.
+    \item We execute empirical evaluations across general, legal, scientific, and news datasets to test generalization across stylistic registers.
+    \item We enforce an architecturally independent fidelity verification step to prevent semantic collapse during the evasion optimization sequence.
+\end{itemize}
+
+\section{Related Work}
+
+We classify the supporting literature into three specific domains. These domains cover transformer-based semantic representations, architectural enhancements for retrieval indexing, and adversarial paraphrase attacks. 
+
+\subsection{Transformer-Based Semantic Representations}
+Bidirectional transformer pretraining established the core framework for contextual text representations. The original BERT architecture serves as the backbone encoder for most similarity models \cite{devlin2019bert}. Sentence-BERT adapted this foundation by utilizing a siamese bi-encoder structure. This structural shift made large-scale semantic similarity searches computationally viable \cite{reimers2019sbert}. SimCSE proved that contrastive learning using basic dropout noise produces highly competitive sentence embeddings. This unsupervised approach removes the dependency on manually labeled textual entailment datasets \cite{gao2021simcse}. %[cite: 4]
+
+\subsection{Architectural Developments for Retrieval}
+Researchers continually modify transformer representations to support specialized retrieval tasks. BMX merges entropy-weighted lexical scoring with dense semantic search. This hybrid system resolves the failures of pure embedding similarity models when processing rare domain keywords \cite{li2024bmx}. Multi-vector approaches replace the single pooled embedding constraint. They perform matching at the token or passage level, securing high precision retrieval for complex scientific texts \cite{mysore2022scientific}. Longformer replaces standard quadratic self-attention with a sparse-attention mechanism. This architecture models document similarity across thousands of tokens, directly preventing the truncation artifacts common in 512-token sequence processing \cite{beltagy2020longformer}. Simple Siamese neural encoders occasionally offer superior computational efficiency compared to these heavy transformer architectures in long document matching scenarios \cite{jha2023longform}. Domain-specific pipelines heavily exploit these improvements. Transformer-based similarity effectively clusters legal court documents \cite{oliveira2022legal}. Specialized feature extraction pipelines isolate entities and geographic data to assess cross-lingual news article similarity accurately \cite{goel2022wolfies}. Patent retrieval systems fuse semantic text representations with technological classifications to build highly accurate hybrid scoring mechanisms \cite{yoo2023patent}. %[cite: 4]
+
+\subsection{Adversarial and Paraphrase Attacks}
+Adversarial NLP research quantifies the vulnerability of text-processing systems. Saliency guidance algorithms identify and alter only the input tokens that exert the highest mathematical influence on a model's output distribution \cite{waghela2024sassp}. This targeted perturbation operates with higher sample efficiency than uniform sequence resampling. Standardized benchmarks systematically stress-test AI-text detectors. PADBen maps paraphrase attacks across a rigorous five-level laundering taxonomy \cite{zha2025padben}. PlagBench supplies a massive filtered corpus of LLM-generated verbatim, paraphrased, and summarized plagiarism \cite{lee2025plagbench}. DetectGPT provides a zero-shot detection baseline utilizing probability curvature. It exposes the fact that machine-generated text occupies distinct negative curvature regions within an LLM's probability distribution \cite{mitchell2023detectgpt}. Automatic evaluation metrics, such as CPES, ensure adversarial paraphrases retain their original syntactic meaning without unfairly penalizing high-quality structural variations \cite{alsulami2026cpes}. %[cite: 4]
+
+A structural gap exists across these methodologies. Representation learning literature prioritizes encoding accuracy. It ignores adversarial resistance under iterative automated querying. Attack literature exposes the failures of binary classifier detectors but bypasses continuous retrieval defenses deployed in deduplication systems. We evaluate the resilience of multi-vector token matching and lexical-semantic hybridization against an adaptive attacker by targeting their continuous similarity scores directly.
+
+\section{System Architecture \& Methodology}
+
+We structure the evaluation under a strict black-box threat model. The adversary lacks access to model weights, gradient graphs, or internal embedding representations. The adversary extracts only the final scalar similarity score from forward inference passes. 
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.95\linewidth}{!}{%
+\begin{tikzpicture}[
+    font=\scriptsize,
+    node distance=6mm and 8mm,
+    box/.style={draw=black!70, fill=white, rounded corners=1.5pt, minimum height=6mm,
+                text width=24mm, align=center, inner sep=2pt, drop shadow},
+    stagebox/.style={draw=black!60, dashed, rounded corners=2pt, inner sep=6pt, fill=black!2},
+    lbl/.style={font=\bfseries\scriptsize, anchor=north west, fill=black!2, inner sep=1pt},
+    arr/.style={-{Latex[length=1.8mm]}, draw=black!70, line width=0.5pt}
+]
+
+\node[box] (a1) {PlagBench};
+\node[box, below=of a1] (a2) {PADBen Benchmark};
+\node[box, below=of a2] (a3) {Legal Court Corpus};
+\node[box, below=of a3] (a4) {SciDocs Corpus};
+\node[box, below=of a4] (a5) {SemEval-2022};
+
+\node[box, right=18mm of a3, yshift=0mm] (ingest) {Pair Assembler $(\mathbf{x},\mathbf{\tilde{x}})$};
+\node[box, below=of ingest] (spanseg) {AST Tokenizer \& Segmenter};
+
+\begin{scope}[on background layer]
+\node[stagebox, fit=(a1)(a2)(a3)(a4)(a5)(ingest)(spanseg), label={[lbl]north west:Stage 1: Corpus \& Parsing}] (S1) {};
+\end{scope}
+
+\draw[arr] (a1) -- (ingest);
+\draw[arr] (a2) -- (ingest);
+\draw[arr] (a3) -- (ingest);
+\draw[arr] (a4) -- (ingest);
+\draw[arr] (a5) -- (ingest);
+\draw[arr] (ingest) -- (spanseg);
+
+\node[box, right=30mm of ingest, yshift=14mm] (d1) {$\mathcal{D}_1$: SBERT Bi-Encoder};
+\node[box, below=of d1] (d2) {$\mathcal{D}_2$: SimCSE Bi-Encoder};
+\node[box, below=of d2] (d3) {$\mathcal{D}_3$: BMX Hybrid};
+\node[box, below=of d3] (d4) {$\mathcal{D}_4$: ColBERT Multi-Vector};
+\node[box, below=of d4] (d5) {$\mathcal{D}_5$: Longformer Engine};
+
+\begin{scope}[on background layer]
+\node[stagebox, fit=(d1)(d2)(d3)(d4)(d5), label={[lbl]north west:Stage 2: Defense Oracles ($\mathcal{D}_1$--$\mathcal{D}_5$)}] (S2) {};
+\end{scope}
+
+\node[box, below=20mm of spanseg, xshift=-6mm] (ctrl) {Budget Monitor ($b \le \mathcal{B}$)};
+\node[box, below=of ctrl, xshift=-28mm] (t1) {Tier 1: Static Paraphrase};
+\node[box, right=4mm of t1] (t2) {Tier 2: Saliency-Guided};
+\node[box, right=4mm of t2] (t3) {Tier 3: RL Policy (PPO)};
+
+\begin{scope}[on background layer]
+\node[stagebox, fit=(t1)(t2)(t3), label={[lbl]north west:Attack Strategies}] (Tiers) {};
+\end{scope}
+
+\node[box, below=8mm of t2] (saliency) {Leave-One-Out Ablation};
+\node[box, below=of saliency] (llm) {Paraphraser LLM};
+\node[box, below=of llm] (candsel) {Rejection Selector};
+
+\begin{scope}[on background layer]
+\node[stagebox, fit=(ctrl)(Tiers)(saliency)(llm)(candsel), label={[lbl]north west:Stage 3: Adaptive Attack Engine}] (S3) {};
+\end{scope}
+
+\draw[arr] (spanseg) -- (ctrl);
+\draw[arr] (ctrl) -- (t2.north);
+\draw[arr] (t2) -- (saliency);
+\draw[arr] (saliency) -- (llm);
+\draw[arr] (llm) -- (candsel);
+\draw[arr] (candsel.east) .. controls +(15mm,0) and +(0,-25mm) .. (d3.south);
+
+\node[box, below=20mm of candsel, xshift=30mm] (fidjudge) {Architecturally Independent Gate};
+\node[box, below=of fidjudge, xshift=-16mm] (j1) {Auto Paraphrase Judge};
+\node[box, right=4mm of j1] (j2) {Bidirectional NLI};
+\node[box, below=10mm of fidjudge] (eval) {Analytics};
+\node[box, below=of eval] (metrics) {ER, FPR, Rank Decay};
+
+\begin{scope}[on background layer]
+\node[stagebox, fit=(fidjudge)(j1)(j2)(eval)(metrics), label={[lbl]north west:Stage 4: Fidelity \& Analytics}] (S4) {};
+\end{scope}
+
+\draw[arr] (candsel.south) .. controls +(0,-10mm) and +(-10mm,10mm) .. (fidjudge.west);
+\draw[arr] (fidjudge) -- (j1);
+\draw[arr] (fidjudge) -- (j2);
+\draw[arr] (j1) -- (eval);
+\draw[arr] (j2) -- (eval);
+\draw[arr] (eval) -- (metrics);
+
+\draw[arr] (d1.west) .. controls +(-10mm,0) and +(10mm,10mm) .. (ctrl.east)
+    node[midway, above, sloped, font=\tiny] {Score $\mathcal{S}$};
+\end{tikzpicture}%
+}
+\caption{End-to-end architectural block diagram of the proposed evaluation framework. The adaptive attack engine optimizes perturbations directly against continuous similarity scores.}
+\label{fig:arch}
+\end{figure}
+
+\subsection{Problem Formulation and Mathematical Notation}
+Let $\mathcal{X}$ denote the vector space containing all natural language text sequences. We define a reference source document as $\mathbf{x} \in \mathcal{X}$ and a suspect candidate document as $\mathbf{\tilde{x}} \in \mathcal{X}$. We parameterize a defense system as a tuple $\mathcal{D} = \{f_\theta, \mathcal{S}, \tau\}$. The pre-trained contextual encoder $f_\theta : \mathcal{X} \rightarrow \mathbb{R}^d$ maps input text into a high-dimensional latent metric space. The similarity scoring function is $\mathcal{S}$. The calibrated binary detection threshold is $\tau$. 
+
+The binary plagiarism classification decision $\hat{y} \in \{0, 1\}$ evaluates as:
+\begin{equation}
+    \hat{y}(\mathbf{x}, \mathbf{\tilde{x}}) = \mathbb{1}\big[\, \mathcal{S}\big(f_\theta(\mathbf{x}), f_\theta(\mathbf{\tilde{x}})\big) \ge \tau \,\big]
+    \label{eq:classification}
+\end{equation}
+\notationblock{\textbf{Eq. \eqref{eq:classification} Notations:} $\hat{y}$: Binary plagiarism decision constraint. $\mathbb{1}[\cdot]$: Indicator function isolating threshold breaches. $\mathcal{S}(\cdot, \cdot)$: Continuous scalar similarity score function. $\tau$: System detection threshold baseline. $f_\theta$: Contextual encoder mapping input text to the latent space.}
+
+For every document pair initially flagged by the system ($\hat{y} = 1$), the adversary constructs an evasive paraphrase $\mathbf{x}'$ utilizing a generative LLM distribution $\mathcal{P}(\mathbf{\tilde{x}})$. This establishes a constrained optimization objective:
+\begin{equation}
+    \mathbf{x}' = \arg\min_{\mathbf{\hat{x}} \in \mathcal{P}(\mathbf{\tilde{x}})} \mathcal{S}(\mathbf{x}, \mathbf{\hat{x}}) \quad \text{s.t.} \quad \mathcal{F}(\mathbf{x}, \mathbf{\hat{x}}) \ge \theta_{\text{fid}}, \quad \mathcal{Q}(\mathbf{x}') \le \mathcal{B}
+    \label{eq:optimization}
+\end{equation}
+\notationblock{\textbf{Eq. \eqref{eq:optimization} Notations:} $\mathbf{x}'$: The optimized evasive candidate text. $\mathcal{P}(\mathbf{\tilde{x}})$: Pool of generated candidate rewrites. $\mathcal{F}$: Independent semantic fidelity verification function. $\theta_{\text{fid}}$: Minimum acceptable meaning preservation threshold limit. $\mathcal{Q}(\mathbf{x}')$: Total black-box forward queries consumed during the attack. $\mathcal{B}$: Maximum query budget allowed per optimization cycle.}
+
+\subsection{Defense Architecture Matrix}
+We isolate distinct architectural features to determine intrinsic evasion resistance. We test five defense oracles ($\mathcal{D}_1$ to $\mathcal{D}_5$). We evaluate all models in their public, pre-trained states without adversarial retraining phases.
+
+Defense $\mathcal{D}_1$ represents the Sentence-BERT bi-encoder. It collapses documents to fixed-dimensional vectors $\mathbf{u}, \mathbf{v} \in \mathbb{R}^d$ through mean token pooling applied over the final hidden states. 
+\begin{equation}
+    \mathbf{u} = \frac{1}{|\mathbf{x}|} \sum_{k=1}^{|\mathbf{x}|} \text{BERT}(\mathbf{x})_k
+    \label{eq:pooling}
+\end{equation}
+The matching score relies on cosine similarity computation:
+\begin{equation}
+    \mathcal{S}_{\mathcal{D}_1}(\mathbf{x}, \mathbf{\tilde{x}}) = \frac{\mathbf{u}^\top \mathbf{v}}{\|\mathbf{u}\|_2 \, \|\mathbf{v}\|_2}
+    \label{eq:cosine}
+\end{equation}
+
+Defense $\mathcal{D}_2$ utilizes SimCSE. It builds representations via contrastive learning utilizing an InfoNCE objective applied over positive pairs derived from independent dropout masks $\mathbf{z}$ and $\mathbf{z}'$. The loss function during the initial training phase evaluates as:
+\begin{equation}
+    \mathcal{L}_i = -\log \frac{\exp\big(\mathcal{S}_{\text{cos}}(\mathbf{h}_i^\mathbf{z}, \mathbf{h}_i^{\mathbf{z}'}) / \mathcal{T}\big)}{\sum_{j=1}^N \exp\big(\mathcal{S}_{\text{cos}}(\mathbf{h}_i^\mathbf{z}, \mathbf{h}_j^{\mathbf{z}'}) / \mathcal{T}\big)}
+    \label{eq:infonce}
+\end{equation}
+\notationblock{\textbf{Eq. \eqref{eq:infonce} Notations:} $\mathcal{L}_i$: InfoNCE contrastive loss scalar for instance $i$. $\mathbf{h}_i^\mathbf{z}, \mathbf{h}_i^{\mathbf{z}'}$: Encoded representations of the same input generated using differing dropout masks. $\mathcal{T}$: Temperature scaling parameter. $N$: Batch size utilized during training.}
+
+Defense $\mathcal{D}_3$ implements the BMX hybrid scorer. It mitigates attacks exploiting embedding anisotropy by fusing dense cosine similarity scores with an entropy-weighted lexical overlap computation.
+\begin{equation}
+    \mathcal{S}_{\mathcal{D}_3}(\mathbf{x}, \mathbf{\tilde{x}}) = \alpha \mathcal{S}_{\text{dense}}(\mathbf{u}, \mathbf{v}) + (1 - \alpha) \mathcal{S}_{\text{lex}}(\mathbf{x}, \mathbf{\tilde{x}})
+    \label{eq:bmx}
+\end{equation}
+
+Defense $\mathcal{D}_4$ employs a ColBERT-style multi-vector late-interaction mapping. It retains the contextual token embeddings within matrix $\mathbf{E}_{\mathbf{x}} \in \mathbb{R}^{|\mathbf{x}| \times d}$. Similarity calculates via a MaxSim operator to preserve fine-grained localized alignments.
+\begin{equation}
+    \mathcal{S}_{\mathcal{D}_4}(\mathbf{x}, \mathbf{\tilde{x}}) = \frac{1}{|\mathbf{x}|} \sum_{i=1}^{|\mathbf{x}|} \max_{j=1..|\mathbf{\tilde{x}}|} \left( \frac{\mathbf{E}_{\mathbf{x}, i}^\top \mathbf{E}_{\mathbf{\tilde{x}}, j}}{\|\mathbf{E}_{\mathbf{x}, i}\|_2 \, \|\mathbf{E}_{\mathbf{\tilde{x}}, j}\|_2} \right)
+    \label{eq:maxsim}
+\end{equation}
+
+Defense $\mathcal{D}_5$ uses the Longformer sparse-attention document encoder to process sequences exceeding 4,000 tokens. This prevents the truncation artifacts associated with standard 512-token context windows.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.9\linewidth}{!}{%
+\begin{tikzpicture}[
+    font=\scriptsize,
+    actorbox/.style={draw=black!70, fill=black!5, rounded corners=1pt, minimum height=6mm, minimum width=22mm, align=center},
+    lifeline/.style={draw=black!50, dashed, line width=0.4pt},
+    act/.style={draw=black!70, fill=white, line width=0.5pt},
+    msg/.style={-{Latex[length=1.6mm]}, draw=black!80, line width=0.5pt},
+    ret/.style={-{Latex[length=1.6mm]}, draw=black!60, dashed, line width=0.5pt},
+    note/.style={font=\tiny\itshape, text=black!70}
+]
+
+\def\xRunner{0}
+\def\xAttack{3.2}
+\def\xTarget{6.4}
+\def\xLLM{9.2}
+\def\xJudge{11.8}
+
+\node[actorbox] (Runner) at (\xRunner,0) {Runner};
+\node[actorbox] (Attack) at (\xAttack,0) {Tier2Attack};
+\node[actorbox] (Target) at (\xTarget,0) {DefenseScorer};
+\node[actorbox] (LLM) at (\xLLM,0) {LLM};
+\node[actorbox] (Judge) at (\xJudge,0) {FidelityJudge};
+
+\draw[lifeline] (Runner.south) -- ++(0,-13.4);
+\draw[lifeline] (Attack.south) -- ++(0,-13.4);
+\draw[lifeline] (Target.south) -- ++(0,-13.4);
+\draw[lifeline] (LLM.south) -- ++(0,-13.4);
+\draw[lifeline] (Judge.south) -- ++(0,-13.4);
+
+\draw[msg] (\xRunner,-0.8) -- (\xTarget,-0.8) node[midway, above, font=\tiny] {1: Initial score$(\mathbf{x}, \mathbf{\tilde{x}})$};
+\draw[ret] (\xTarget,-1.3) -- (\xRunner,-1.3) node[midway, above, font=\tiny] {2: score $s_0$};
+
+\draw[draw=black!60, line width=0.5pt] (-0.9,-1.8) rectangle (12.6,-12.6);
+\node[anchor=north west, font=\tiny\bfseries] at (-0.9,-1.8) {opt\ \ \ \ [if $s_0 \ge \tau$]};
+
+\draw[msg] (\xRunner,-2.5) -- (\xAttack,-2.5) node[midway, above, font=\tiny] {3: executeAttack(Budget $\mathcal{B}$)};
+\draw[act] (\xAttack-0.1,-2.5) rectangle (\xAttack+0.1,-12.1);
+
+\draw[draw=black!60, line width=0.5pt] (-0.4,-2.9) rectangle (12.1,-11.9);
+\node[anchor=north west, font=\tiny\bfseries] at (-0.4,-2.9) {loop\ \ \ [Until Budget Exhausted or Success]};
+
+\node[note, anchor=west] at (\xAttack+0.3,-3.4) {Phase A: Saliency Ablation};
+\draw[msg] (\xAttack,-3.9) -- (\xTarget,-3.9) node[midway, above, font=\tiny] {4: score$(\mathbf{x}, \mathbf{\tilde{x}} \setminus w_i)$};
+\draw[ret] (\xTarget,-4.4) -- (\xAttack,-4.4) node[midway, above, font=\tiny] {5: ablated score};
+\draw[draw=black!50, dotted, line width=0.4pt] (0.3,-3.5) rectangle (7.0,-4.7);
+\node[font=\tiny\itshape] at (3.6,-4.85) {(for each span $w_i$)};
+
+\node[note, anchor=west] at (\xAttack+0.3,-5.6) {Phase B: Targeted Rewrite};
+\draw[msg] (\xAttack,-6.1) -- (\xLLM,-6.1) node[midway, above, font=\tiny, align=center] {6: sampleCandidates(top\_k\_spans)};
+\draw[ret] (\xLLM,-6.6) -- (\xAttack,-6.6) node[midway, above, font=\tiny] {7: CandidateSet $\{c_1..c_4\}$};
+
+\node[note, anchor=west] at (\xAttack+0.3,-7.4) {Phase C: Semantic Filtering};
+\draw[msg] (\xAttack,-7.9) -- (\xJudge,-7.9) node[midway, above, font=\tiny, align=center] {8: verifySemanticFidelity$(\mathbf{x},c_j)$};
+\draw[ret] (\xJudge,-8.4) -- (\xAttack,-8.4) node[midway, above, font=\tiny] {9: pass/fail status};
+\draw[draw=black!50, dotted, line width=0.4pt] (0.3,-7.5) rectangle (12.3,-8.7);
+\node[font=\tiny\itshape] at (6.3,-8.85) {(for each candidate $c_j$)};
+
+\node[note, anchor=west] at (\xAttack+0.3,-9.9) {Phase D: Rejection Sampling};
+\draw[msg] (\xAttack,-10.4) -- (\xTarget,-10.4) node[midway, above, font=\tiny] {10: batchScore(valid\_candidates)};
+\draw[ret] (\xTarget,-10.9) -- (\xAttack,-10.9) node[midway, above, font=\tiny] {11: scores};
+\draw[msg] (\xAttack,-11.4) to[out=200,in=160,looseness=8] (\xAttack,-11.4);
+\node[anchor=west, font=\tiny] at (\xAttack+0.35,-11.4) {12: Select min score, update $\mathbf{\tilde{x}}$};
+
+\draw[ret] (\xAttack,-12.3) -- (\xRunner,-12.3) node[midway, above, font=\tiny] {13: AttackResult};
+\end{tikzpicture}%
+}
+\caption{Runtime interactions during a Tier 2 Saliency-Guided Attack. The orchestrator tracks query consumption across ablation, language model generation, and semantic filtering.}
+\label{fig:sequence}
+\end{figure}
+
+\subsection{Adaptive Attack Construction}
+The evaluation mechanism operates across three discrete tiers. Tier 1 executes static paraphrasing as a zero-feedback baseline measure. 
+
+Tier 2 implements saliency-guided rejection sampling. The script segments candidate $\mathbf{\tilde{x}}$ into $M$ non-overlapping syntactic spans $\mathcal{W} = \{w_1, w_2, \dots, w_M\}$. We compute an attribution score $\mathcal{I}(w_i)$ by evaluating the mathematical drop in similarity caused by the removal of span $w_i$.
+\begin{equation}
+    \mathcal{I}(w_i) = \big|\, \mathcal{S}(\mathbf{x}, \mathbf{\tilde{x}}) - \mathcal{S}(\mathbf{x}, \mathbf{\tilde{x}} \setminus w_i) \,\big|
+    \label{eq:saliency}
+\end{equation}
+The generative model samples a pool of candidate rewrites $\mathcal{C}$ focused exclusively on the target subset of spans exhibiting the highest attribution scores. 
+
+Tier 3 explores a closed-loop reinforcement learning policy fine-tuned via Proximal Policy Optimization. The scalar reward function couples evasion progress with a hard semantic barrier penalty.
+\begin{equation}
+    \mathcal{R}(\mathbf{x}, \mathbf{x}') = -\mathcal{S}_{\mathcal{D}}(\mathbf{x}, \mathbf{x}') + \beta \mathcal{F}(\mathbf{x}, \mathbf{x}') - \gamma \max\big(0, \theta_{\text{fid}} - \mathcal{F}(\mathbf{x}, \mathbf{x}')\big)
+    \label{eq:reward}
+\end{equation}
+\notationblock{\textbf{Eq. \eqref{eq:reward} Notations:} $\mathcal{R}(\mathbf{x}, \mathbf{x}')$: Total scalar reward signal output. $\beta$: Weight multiplier scaling the baseline fidelity value. $\gamma$: Massive boundary penalty applied strictly when semantic fidelity violates limit $\theta_{\text{fid}}$.}
+
+Using BERTScore as a primary fidelity metric introduces methodological circularity because it shares underlying embedding geometries with the evaluated target defenses. We construct a dual-judge verification pipeline using an independent non-BERT cross-encoder for Natural Language Inference to maintain rigorous evaluation isolation.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.95\linewidth}{!}{%
+\begin{tikzpicture}[
+    font=\scriptsize, >=Latex,
+    st/.style={draw=black!70, fill=white, rounded corners=3pt, minimum height=7mm, minimum width=19mm, align=center, inner sep=2pt},
+    initst/.style={circle, draw=black, fill=black, minimum size=2mm, inner sep=0pt},
+    compound/.style={draw=black!60, dashed, rounded corners=3pt, inner sep=5pt, fill=black!5},
+    lbl/.style={font=\bfseries\scriptsize, anchor=north west},
+    tr/.style={-{Latex[length=1.8mm]}, draw=black!80, line width=0.6pt}
+]
+
+\node[initst] (init0) at (0,0) {};
+\node[st, right=10mm of init0] (Init) {Init};
+\node[st, right=16mm of Init] (Score) {Score};
+\node[st, right=24mm of Score, yshift=0mm] (Success) {Success};
+\node[initst, right=8mm of Success] (endSuccess) {};
+
+\node[st, below=20mm of Score, xshift=4mm] (Ablate) {Ablate:\\Syntactic Partitioning};
+\node[st, right=8mm of Ablate] (Rank) {Rank: Query Oracle,\\Compute $\mathcal{I}(w_i)$};
+\begin{scope}[on background layer]
+\node[compound, fit=(Ablate)(Rank), label={[lbl]north west:Saliency}] (SalCompound) {};
+\end{scope}
+\node[st, right=24mm of SalCompound.east] (Generate) {Generate};
+
+\node[st, below=22mm of Ablate] (AutoParaphrase) {AutoParaphrase:\\Non-BERT Overlap};
+\node[st, right=8mm of AutoParaphrase] (NLI) {NLI: Cross-Encoder\\Entailment};
+\node[st, right=8mm of NLI] (Filter) {Filter:\\$\mathcal{F}(\mathbf{x},c_j)\ge\theta_{\text{fid}}$};
+\begin{scope}[on background layer]
+\node[compound, fit=(AutoParaphrase)(NLI)(Filter), label={[lbl]north west:Verify}] (VerCompound) {};
+\end{scope}
+
+\node[st, below=20mm of NLI, xshift=-4mm] (Update) {Update};
+\node[st, right=14mm of Update] (Fallback) {Fallback};
+
+\node[st, below=16mm of Update, xshift=10mm] (BudgetCheck) {BudgetCheck};
+\node[st, right=20mm of BudgetCheck] (Fail) {Fail};
+\node[initst, right=8mm of Fail] (endFail) {};
+
+\draw[tr] (init0) -- (Init) node[midway, above, font=\tiny] {Load Pair $(\mathbf{x},\mathbf{\tilde{x}})$};
+\draw[tr] (Init) -- (Score) node[midway, above, font=\tiny] {Check Baseline};
+\draw[tr] (Score) -- (Success) node[midway, above, font=\tiny] {$s < \tau$};
+\draw[tr] (Success) -- (endSuccess);
+
+\draw[tr] (Score.south) .. controls +(0,-8mm) and +(0,10mm) .. (SalCompound.north)
+    node[near start, right, font=\tiny] {$s \ge \tau$};
+
+\draw[tr] (Ablate) -- (Rank);
+\draw[tr] (SalCompound.east) -- (Generate.west) node[midway, above, font=\tiny] {Spans Identified};
+\draw[tr] (Generate.south) .. controls +(0,-10mm) and +(20mm,10mm) .. (VerCompound.north east)
+    node[near start, right, font=\tiny, align=left] {Sample LLM\\Candidates};
+
+\draw[tr] (AutoParaphrase) -- (NLI);
+\draw[tr] (NLI) -- (Filter);
+
+\draw[tr] (VerCompound.south) .. controls +(0,-8mm) and +(0,8mm) .. (Update.north)
+    node[midway, right, font=\tiny, align=left] {$\ge 1$ Valid\\Candidate};
+\draw[tr] (VerCompound.south west) .. controls +(-8mm,-10mm) and +(-10mm,10mm) .. (Fallback.north)
+    node[near start, left, font=\tiny, align=right] {0 Valid\\Candidates};
+
+\draw[tr] (Fallback) -- (BudgetCheck);
+\draw[tr] (Update) -- (BudgetCheck) node[midway, right, font=\tiny] {Select Best Candidate};
+
+\draw[tr] (BudgetCheck.west) .. controls +(-40mm,0) and +(-20mm,-40mm) .. (SalCompound.south west)
+    node[near start, left, font=\tiny, align=right] {$b < \mathcal{B}$ AND $s \ge \tau$};
+\draw[tr] (BudgetCheck.north) .. controls +(0,60mm) and +(0,-30mm) .. (Success.south)
+    node[near end, right, font=\tiny, align=left] {$s<\tau$ AND $\mathcal{F}\ge\theta_{\text{fid}}$};
+\draw[tr] (BudgetCheck) -- (Fail) node[midway, above, font=\tiny, align=center] {$b\ge \mathcal{B}$ AND $s\ge\tau$};
+\draw[tr] (Fail) -- (endFail);
+
+\end{tikzpicture}%
+}
+\caption{State machine governing the adaptive evasion loop. Optimization sequences continually balance against strict semantic preservation thresholds.}
+\label{fig:state-machine}
+\end{figure}
+
+\section{Implementation Details \& Experimental Setup}
+
+We initialize the target defenses using baseline pre-trained checkpoints to simulate production deployments. We instantiate SBERT utilizing the \texttt{all-MiniLM-L6-v2} network backbone. We configure SimCSE using the \texttt{sup-simcse-bert-base-uncased} model. The attack engine connects directly to an LLM sampling kernel parameterized with temperature $T = 0.90$ and nucleus sampling $p = 0.95$ to guarantee generation diversity during perturbation.
+
+We strictly cap the computational query budget at $\mathcal{B} = 50$ forward passes per document pair. The semantic fidelity limit is fixed to $\theta_{\text{fid}} = 0.75$. 
+
+We assemble a unified evaluation corpus drawing from five distinct text domains \cite{lee2025plagbench, zha2025padben, oliveira2022legal, mysore2022scientific, goel2022wolfies}. PlagBench provides synthetic academic and web text pairs. The PADBen dataset supplies heavily obfuscated sentences generated iteratively. We deploy a Legal Court corpus featuring Brazilian labor court proceedings to stress-test Longformer's handling of jurisprudence documents. The SciDocs and CSFCUBE corpora isolate fine-grained technical terminology requirements for Defense $\mathcal{D}_4$. SemEval-2022 Task 8 data assesses generalization against factual journalistic structures. %[cite: 4]
+
+\section{Preliminary Results \& Discussion}
+
+We assess the adversarial execution framework using standardized quantitative metrics. Evasion Rate (ER) defines the final percentage of initially flagged documents successfully pushed beneath threshold $\tau$. The Fidelity-Preserved Evasion Rate (FPER) measures genuine practical success. This metric demands the candidate satisfy the evasion criteria and the semantic boundary concurrently.
+\begin{equation}
+    \text{FPER} = \frac{1}{|\mathcal{D}_{\text{plag}}|} \sum_{(\mathbf{x}, \mathbf{\tilde{x}}) \in \mathcal{D}_{\text{plag}}} \mathbb{1}\big[\, \mathcal{S}(\mathbf{x}, \mathbf{x}') < \tau \;\land\; \mathcal{F}(\mathbf{x}, \mathbf{x}') \ge \theta_{\text{fid}} \,\big]
+    \label{eq:fper}
+\end{equation}
+
+We calculate the Spearman rank correlation decay ($\Delta \rho$) to measure how the adversarial pipeline degrades the similarity model's ability to rank text accurately against continuous human evaluation scores. Mean Query Complexity (MQC) captures the exact mathematical sample efficiency of the saliency-guided span ablation logic. 
+
+We generate a cross-architecture Transferability Matrix $\mathbf{T} \in \mathbb{R}^{5 \times 5}$ by applying text optimized against source defense $i$ to target defense $j$.
+\begin{equation}
+    \mathbf{T}_{i, j} = \text{FPER}\big(\mathcal{P}_{\mathcal{D}_i}(\mathbf{\tilde{x}}) \longrightarrow \mathcal{D}_j\big)
+    \label{eq:transfer}
+\end{equation}
+
+Initial metrics show that pooled-vector architectures like SBERT and SimCSE demonstrate severe vulnerabilities under highly restricted query budgets. Architectures relying on rigid lexical overlapping, specifically the BMX hybrid module, indicate higher resistance to pure embedding manipulation and correspondingly display lower cross-model transferability rates. Supervised zero-shot detectors, such as DetectGPT, identify AI patterns efficiently via AUROC evaluation but struggle with direct iteration mapping against continuous similarity thresholds \cite{mitchell2023detectgpt}. %[cite: 4]
+
+\section{Conclusion and Future Roadmap}
+
+We constructed an evaluation framework for analyzing retrieval and similarity-based plagiarism defenses under adaptive, detector-aware paraphrase attacks. We targeted the continuous similarity scoring functions directly across varied dataset conditions. We mapped the performance across single-vector, multi-vector, hybrid, and long-document architectures to isolate specific structural vulnerabilities inherent in modern embedding algorithms. 
+
+Future methodologies will integrate adversarial retraining techniques into the pipeline. We plan to fine-tune the evaluated defense oracles utilizing the successful evasion texts generated exclusively by the Tier 2 attack cycle. We will evaluate dynamic query expansion rules to enable defense retrieval protocols to match complex adversarial paraphrases dynamically at search time.
+
+\begin{thebibliography}{15}
+
+\bibitem{devlin2019bert}
+J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova, ``BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding,'' \textit{Proc. NAACL-HLT}, 2019.
+
+\bibitem{reimers2019sbert}
+N. Reimers and I. Gurevych, ``Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks,'' \textit{Proc. EMNLP-IJCNLP}, 2019.
+
+\bibitem{gao2021simcse}
+T. Gao, X. Yao, and D. Chen, ``SimCSE: Simple Contrastive Learning of Sentence Embeddings,'' \textit{Proc. EMNLP}, 2021.
+
+\bibitem{waghela2024sassp}
+H. Waghela, J. Sen, M. Roy, and S. Das, ``Saliency attention and semantic similarity-driven adversarial perturbation,'' \textit{Proc. ICDSA}, 2024.
+
+\bibitem{li2024bmx}
+X. Li, J. Lipp, A. Shakir, R. Huang, and J. Li, ``BMX: Entropy-weighted similarity and semantic-enhanced lexical search,'' \textit{arXiv preprint}, 2024.
+
+\bibitem{yoo2023patent}
+Y. Yoo, C. Jeong, S. Gim, J. Lee, Z. Schimke, and D. Seo, ``A Novel Patent Similarity Measurement Methodology: Semantic Distance and Technological Distance,'' \textit{arXiv preprint}, 2023.
+
+\bibitem{oliveira2022legal}
+R. S. Oliveira and E. G. S. Nascimento, ``Analysing Similarities Between Legal Court Documents Using Natural Language Processing Approaches Based on Transformers,'' \textit{arXiv preprint}, 2022.
+
+\bibitem{mysore2022scientific}
+S. Mysore, A. Cohan, and T. Hope, ``Multi Vector Models with Textual Guidance for Fine Grained Scientific Document Similarity,'' \textit{arXiv preprint}, 2022.
+
+\bibitem{jha2023longform}
+A. Jha, A. Samavedhi, V. Rakesh, J. Chandrashekar, and C. K. Reddy, ``Transformer Based Models for Long Form Document Matching: Challenges and Empirical Analysis,'' \textit{arXiv preprint}, 2023.
+
+\bibitem{beltagy2020longformer}
+I. Beltagy, M. E. Peters, and A. Cohan, ``Longformer: The Long Document Transformer,'' \textit{arXiv preprint}, 2020.
+
+\bibitem{alsulami2026cpes}
+H. R. Alsulami and A. A. Almansour, ``CPES: A Comprehensive Method for Automatic Evaluation of Paraphrased Sentences,'' \textit{Applied Sciences}, 2026.
+
+\bibitem{zha2025padben}
+Y. Zha, R. Min, and S. Shanu, ``PADBen: A Comprehensive Benchmark for Evaluating AI Text Detectors Against Paraphrase Attacks,'' \textit{arXiv preprint}, 2025.
+
+\bibitem{mitchell2023detectgpt}
+E. Mitchell, Y. Lee, A. Khazatsky, C. D. Manning, and C. Finn, ``DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature,'' \textit{Proc. ICML}, 2023.
+
+\bibitem{lee2025plagbench}
+J. Lee, T. Agrawal, A. Uchendu, T. Le, J. Chen, and D. Lee, ``PlagBench: Exploring the Duality of Large Language Models in Plagiarism Generation and Detection,'' \textit{Proc. NAACL-HLT}, 2025.
+
+\bibitem{goel2022wolfies}
+N. Goel and R. Reddy, ``Wolfies at SemEval-2022 Task 8: Feature extraction pipeline with transformers for Multi-lingual news article similarity,'' \textit{Proc. SemEval}, 2022.
+
+\end{thebibliography}
+
+\end{document}
