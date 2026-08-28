@@ -317,12 +317,20 @@ Evaluations span our standardized 250-document pair benchmark corpus spanning fi
     \item \textbf{Multilingual News Corpus (SemEval-2022 Task 8)} \cite{goel2022wolfies}: Sourced from MTEB STS22 and Zenodo 6507872, capturing cross-article topical alignment across macroeconomic policies, satellite launches, semiconductor subsidies, and antitrust litigation.
 \end{enumerate}
 
-Quantitative evaluation metrics include:
+Quantitative evaluation metrics are defined as follows:
 \begin{itemize}
-    \item \textbf{Evasion Rate (ER)}: Proportion of flagged pairs pushed safely below calibrated threshold $\tau_i$.
-    \item \textbf{Fidelity-Preserved Evasion Rate (FPER)} (Eq. \ref{eq:fper}): Proportion achieving $S(\mathbf{x}, \mathbf{x}') < \tau_i$ and $\mathcal{F}(\mathbf{x}, \mathbf{x}') \ge 0.75$.
-    \item \textbf{Mean Query Complexity (MQC)}: Average oracle queries consumed per pair ($B \le 50$).
-    \item \textbf{Spearman Rank Correlation Decay ($\Delta\rho$)}: Degradation in ranking correlation against original scores.
+    \item \textbf{Baseline $s_0$}: The initial similarity score evaluated by defense oracle $\mathcal{D}_i$ on the original, unmodified suspect text $\mathbf{\tilde{x}}$. Evaluated as $s_0 = \mathcal{S}_{\mathcal{D}_i}(\mathbf{x}, \mathbf{\tilde{x}})$.
+    \item \textbf{Final $s'$}: The post-attack similarity score of the perturbed adversarial text $\mathbf{x}'$. Evaluated as $s' = \mathcal{S}_{\mathcal{D}_i}(\mathbf{x}, \mathbf{x}')$.
+    \item \textbf{Fidelity $\mathcal{F}$}: The semantic preservation score determined by the independent DeBERTa NLI cross-encoder. Evaluated as $\mathcal{F}(\mathbf{x}, \mathbf{x}') \in [0, 1]$.
+    \item \textbf{Evasion Rate (ER)}: Proportion of document pairs successfully pushed below the calibrated detection threshold $\tau_i$, regardless of their semantic fidelity.
+    \begin{equation}
+        \text{ER} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(\mathbf{x}, \mathbf{\tilde{x}}) \in \mathcal{D}_{\text{test}}} \mathbb{1}\big[\, \mathcal{S}_{\mathcal{D}_i}(\mathbf{x}, \mathbf{x}') < \tau_i \,\big]
+    \end{equation}
+    \item \textbf{Fidelity-Preserved Evasion Rate (FPER)} (Eq. \ref{eq:fper}): The stringent success rate requiring both threshold evasion and semantic preservation ($\mathcal{F}(\mathbf{x}, \mathbf{x}') \ge 0.75$).
+    \item \textbf{Mean Query Complexity (MQC)}: The average number of black-box queries $q$ dispatched to the defense oracle per document pair, strictly bounded by budget $\mathcal{B} \le 50$.
+    \begin{equation}
+        \text{MQC} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{i=1}^{|\mathcal{D}_{\text{test}}|} q_i
+    \end{equation}
 \end{itemize}
 
 \subsection{Per-Architecture Threshold Calibration ($\tau_i$)}
@@ -354,6 +362,8 @@ $\mathcal{D}_5$: Longformer & Sliding-window attention & $\sim$0.77 & [0.50, 0.9
 \bottomrule
 \end{tabular}%
 }
+\vspace{1em}
+\small \textbf{Glossary:} \textbf{Mean $s_0$}: Average similarity score of unperturbed baseline pairs; \textbf{Calibrated $\tau_i$}: The detection threshold mathematically derived to maintain a $5\%$ FPR (Eq. \ref{eq:calibration}); \textbf{Margin}: The difference between the baseline mean score and the threshold ($s_0 - \tau_i$).
 \end{table}
 
 The calibrated thresholds reveal fundamentally different scoring geometries across architectures. SimCSE ($\tau_2 = 0.88$) projects paraphrase pairs into a narrow, high-similarity band ($0.85$--$0.96$), providing the attacker with the smallest relative margin to exploit. BMX ($\tau_3 = 0.48$) and ColBERT ($\tau_4 = 0.68$) operate in lower absolute score ranges but with proportionally tight margins above their respective thresholds, ensuring that evasion requires genuine adversarial effort rather than trivially falling below a miscalibrated boundary.
@@ -411,6 +421,8 @@ Table~\ref{tab:main_results} details empirical performance metrics across all fi
 \bottomrule
 \end{tabular}%
 }
+\vspace{1em}
+\small \textbf{Glossary:} \textbf{Baseline $s_0$}: Pre-attack similarity score; \textbf{Final $s'$}: Post-attack similarity score; \textbf{Fidelity $\mathcal{F}$}: NLI semantic preservation score; \textbf{ER}: Evasion Rate (ignoring semantics); \textbf{FPER}: Fidelity-Preserved Evasion Rate (strict evasion with semantic preservation $\ge 0.75$); \textbf{MQC}: Mean Query Complexity (average oracle queries out of 50 budget).
 \end{table*}
 
 Continuous benchmarking pipeline execution on standardized Python 3.11 via GitHub Actions reveals dynamics that fundamentally challenge initial structural hypotheses (visualized natively in Figure~\ref{fig:tier_comparison} and Figure~\ref{fig:query_curve}). 
@@ -471,6 +483,8 @@ Journalistic (News)   & 20 & 80.0\% & 80.0\% & 0.841 & 10.8 \\
 \bottomrule
 \end{tabular}%
 }
+\vspace{1em}
+\small \textbf{Glossary:} \textbf{Evaluations}: Number of document pairs tested per domain; \textbf{ER}: Evasion Rate (attacks defeating the threshold); \textbf{FPER}: Fidelity-Preserved Evasion Rate (evasion with NLI score $\ge 0.75$); \textbf{Mean Fidelity}: Average semantic preservation score across all pairs; \textbf{Avg. Query Cost}: The mean number of API queries consumed to find an adversarial example.
 \end{table}
 
 \begin{figure}[htbp]
@@ -601,6 +615,8 @@ $\alpha = 0.90$ & 90\% & 10\% & 0.7129 & 5.0\% \\
 \bottomrule
 \end{tabular}%
 }
+\vspace{1em}
+\small \textbf{Glossary:} \textbf{Parameter $\alpha$}: The hyperparameter controlling the balance between dense vector similarity and lexical overlap; \textbf{Dense Ratio}: The percentage weight of the neural dense representation ($100 \times \alpha$); \textbf{Lexical Ratio}: The percentage weight of the token-level TF-IDF overlap ($100 \times (1-\alpha)$); \textbf{Adversarial Evasion}: The success rate of the saliency-guided attack in dropping the score below $\tau_3=0.48$.
 \end{table}
 
 Increasing dense reliance ($\alpha = 0.90$) drastically reduces evasion vulnerability from $95.0\%$ to $5.0\%$ by shifting the scoring distribution well above the $\tau_3=0.48$ detection threshold. This confirms that heavy lexical penalties ($1-\alpha$) drag the overall similarity scores artificially low, precipitating catastrophic detection failures even against standard paraphrases.
@@ -627,6 +643,8 @@ ColBERT Multi-Vector \cite{khattab2020colbert}             & \textbf{Ours (Tier 
 \bottomrule
 \end{tabular}%
 }
+\vspace{1em}
+\small \textbf{Glossary:} \textbf{Baseline / Defense System}: The model architecture used for detecting plagiarism; \textbf{Attack Formulation}: The adversarial strategy used to evade the defense; \textbf{Detection AUROC}: The area under the ROC curve reflecting global detection separability; \textbf{Adversarial FPER}: Fidelity-Preserved Evasion Rate of the attack against the defense; \textbf{Fidelity $\mathcal{F}$}: Mean semantic preservation score of successful adversarial examples.
 \end{table}
 
 Under our saliency-guided attack, the detection capability (AUROC) of complex hybrid architectures collapses near random chance ($0.518$), while contrastive single-vector representations retain substantially higher discriminant power.
