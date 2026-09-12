@@ -36,7 +36,7 @@ Course Project Phase 4 Submission}}
 \maketitle
 
 \begin{abstract}
-Automated plagiarism detection is breaking. Simple string-matching died years ago. Today's generative engines effortlessly synthesize hyper-evasive paraphrases that slip completely undetected past continuous similarity filters. We wanted to know exactly how resilient modern embedding-based defenses actually are when faced with a detector-aware, aggressively adaptive adversary. To find out, we engineered a Leave-One-Out (LOO) saliency-guided attack. It doesn't guess. It iteratively optimizes text perturbations using the raw continuous scalar feedback of the target systems themselves, strictly constrained by a meager black-box budget ($\mathcal{B}=50$). We threw five distinct architectures into the crucible: Sentence-BERT, SimCSE, BMX Hybrid, ColBERT multi-vector late-interaction, and Longformer. Because semantic collapse invalidates adversarial claims, we slammed a rigid, architecturally independent Natural Language Inference (NLI) fidelity gate into the pipeline. Testing across 250 cross-sampled pairs from legal, scientific, academic, journalistic, and obfuscated domains revealed staggering disparities. Once we mathematically calibrated the decision boundaries ($\tau_i$), the results shattered assumptions. Fancy multi-vector and hybrid lexical-semantic systems crumbled, hemorrhaging fidelity-preserved evasion rates (FPER) up to 55.0\%. Meanwhile, isotropic contrastive representations (SimCSE) stood essentially bulletproof (15.0\% FPER). Finally, we mapped a unified $5 \times 5$ cross-architecture transferability matrix and Normalized Transferability Delta ($\Delta\mathbf{T}$), proving that target stringency dictates evasion far more than gradient geometry.
+Automated plagiarism detection now depends on semantic evaluation; surface-level lexical matching no longer suffices. Large language models generate evasive paraphrases that bypass continuous similarity filters. We quantify the structural resilience of five retrieval and embedding-based plagiarism defenses against adaptive, detector-aware paraphrase attacks. We design a Leave-One-Out (LOO) saliency-guided attack that optimizes text perturbations directly against a target system's scalar similarity feedback under a strict black-box query budget ($B = 50$). We evaluate five defense architectures: Sentence-BERT, SimCSE, BMX Hybrid, ColBERT multi-vector late-interaction, and Longformer. An architecturally independent Natural Language Inference (NLI) fidelity gate blocks semantic collapse during rewriting. Across a 250-pair corpus spanning legal (Oliveira \& Nascimento), scientific (SciDocs/CSFCube), news (SemEval-2022 Task 8), and obfuscated (PADBen) registers, evasion resistance varies sharply by architecture. Under independently calibrated decision thresholds ($\tau_i$, 5\% FPR), hybrid lexical-semantic (BMX) and multi-vector late-interaction (ColBERT) architectures reach 40.0--45.0\% Fidelity-Preserved Evasion Rate (FPER), Sentence-BERT reaches 55.0--60.0\% FPER, and isotropic contrastive representations (SimCSE) hold evasion to 10.0--15.0\% FPER while exhausting 86\% of the query budget. We report the resulting $5 \times 5$ cross-architecture transferability matrix and a Normalized Transferability Delta ($\Delta T$) that isolates genuine transferable adversarial distortion from baseline sensitivity.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -45,42 +45,42 @@ Plagiarism Detection, Adversarial Paraphrasing, Semantic Similarity, Transformer
 
 \section{Introduction}
 
-Nobody checks for plagiarism by looking at verbatim strings anymore. The industry moved on. Deduplication engines, massive intellectual property repositories, and academic integrity networks all rely entirely on deep contextual evaluation. Under the hood, continuous retrieval architectures \cite{devlin2019bert, reimers2019sbert, gao2021simcse} power this machinery. They utilize transformer encoders to hurl source documents $\mathbf{x}$ and suspect candidate texts $\mathbf{\tilde{x}}$ into dense, high-dimensional latent metric spaces. If the continuous similarity score breaches a mathematically calibrated threshold $\tau_i$, the system flags it. Plagiarism caught.
+Verbatim string comparison is obsolete in modern plagiarism detection; the field now relies on contextual, semantic evaluation. Deduplication engines, academic integrity networks, and intellectual property repositories depend on continuous retrieval architectures \cite{devlin2019bert, reimers2019sbert, gao2021simcse}. These systems project source documents $\mathbf{x}$ and suspect texts $\mathbf{\tilde{x}}$ into high-dimensional latent metric spaces using dense transformer embeddings, and classify plagiarism when similarity scores exceed calibrated thresholds $\tau_i$.
 
-But generative Large Language Models (LLMs) are tearing these defenses apart. Why? Because an adaptive adversary doesn't just blindly rewrite text. They iteratively probe the black-box similarity oracle itself. Feeding off continuous scalar feedback, attackers forcefully steer generative rewriting directly toward the mathematical blind spots of the embedding space \cite{waghela2024sassp, zha2025padben}. It becomes a ruthless optimization loop. Phrasing, syntax, and lexical choices mutate systematically, yet the underlying factual integrity remains perfectly intact. Researchers have furiously stress-tested zero-shot discrete classifiers like DetectGPT \cite{mitchell2023detectgpt} and watermarking schemes \cite{kirchenbauer2023watermark}. Oddly enough, the structural bedrock of continuous retrieval defenses remains almost completely unquantified against this exact breed of detector-aware iterative attacks.
+Generative LLMs expose a structural vulnerability in these defenses: an adaptive adversary can iteratively query a black-box similarity oracle and use the continuous score feedback to steer rewriting toward minimum-detection regions \cite{waghela2024sassp, zha2025padben}. This optimization loop shifts syntax, phrasing, and lexical choice while preserving factual meaning. Zero-shot discrete detectors (DetectGPT \cite{mitchell2023detectgpt}, watermarking \cite{kirchenbauer2023watermark}) have been stress-tested extensively; the resilience of continuous retrieval-based defenses under iterative, detector-aware attack remains unquantified.
 
-Deployed architectures vary wildly in how they construct semantic geometry:
+Deployed defense architectures differ substantially in structure:
 \begin{itemize}
-    \item \textbf{Sentence-BERT ($\mathcal{D}_1$)} forcibly compresses entire sequences using crude siamese mean token pooling \cite{reimers2019sbert}.
-    \item \textbf{SimCSE ($\mathcal{D}_2$)} sculpts beautifully isotropic representations using contrastive InfoNCE learning applied across independent dropout masks \cite{gao2021simcse}.
-    \item \textbf{BMX ($\mathcal{D}_3$)} stubbornly refuses pure dense manipulation, mixing semantic embeddings with raw entropy-weighted lexical overlap \cite{li2024bmx, robertson2009bm25}.
-    \item \textbf{ColBERT ($\mathcal{D}_4$)} abandons single-vector pooling altogether, keeping every single token embedding to execute granular late-interaction MaxSim alignments \cite{khattab2020colbert, mysore2022scientific}.
-    \item \textbf{Longformer ($\mathcal{D}_5$)} ditches quadratic attention for sliding-window heuristics, gracefully ingesting 4,096 tokens without ugly truncation artifacts \cite{beltagy2020longformer, jha2023longform}.
+    \item Sentence-BERT ($\mathcal{D}_1$) compresses sequences via siamese mean token pooling \cite{reimers2019sbert}.
+    \item SimCSE ($\mathcal{D}_2$) constructs isotropic representations via contrastive InfoNCE learning over dropout masks \cite{gao2021simcse}.
+    \item BMX ($\mathcal{D}_3$) combines dense semantic similarity with entropy-weighted lexical overlap, preventing pure embedding manipulation \cite{li2024bmx, robertson2009bm25}.
+    \item ColBERT ($\mathcal{D}_4$) employs token-level multi-vector late-interaction matching via a MaxSim operator \cite{khattab2020colbert, mysore2022scientific}.
+    \item Longformer ($\mathcal{D}_5$) uses localized sliding-window and sparse global attention, eliminating truncation across long-form documents \cite{beltagy2020longformer, jha2023longform}.
 \end{itemize}
 
-We needed to map the exact vulnerability surface of these representations. We built an aggressive, detector-aware paraphrase attack framework operating under a suffocatingly tight black-box budget ($\mathcal{B} = 50$). Our algorithm rips suspect text apart using Leave-One-Out (LOO) syntactic span ablation. It feeds the vulnerability scores into a feedback-driven LLM rejection sampler, gating everything behind a brutal, architecturally independent Natural Language Inference (NLI) cross-encoder to guarantee absolute semantic fidelity \cite{he2021deberta, zhang2019bertscore}. 
+We quantify these vulnerabilities with an adaptive, detector-aware paraphrase attack operating under a strict black-box query budget ($B = 50$). The algorithm combines Leave-One-Out (LOO) syntactic span ablation, feedback-driven rejection sampling, and an architecturally independent Natural Language Inference (NLI) cross-encoder fidelity gate \cite{he2021deberta, zhang2019bertscore}.
 
-Our core contributions slice through the ambiguity:
+Our core contributions:
 \begin{itemize}
-    \item \textbf{Adaptive Saliency-Guided Attack Algorithm}: We engineered a ruthless detector-aware attack. It magnetically tracks high-attribution syntactic spans via Leave-One-Out ablation, surgically perturbing them through LLM rejection sampling.
-    \item \textbf{Calibrated Five-Architecture Defense Benchmark Matrix}: We systematically dismantled five distinct paradigms ($\mathcal{D}_1$--$\mathcal{D}_5$). By independently calibrating decision thresholds ($\tau_i$) to a draconian $5\%$ False Positive Rate ($\text{FPR} = 0.05$), we eliminated trivial baseline failures entirely.
-    \item \textbf{Cross-Architecture Transferability \& Normalized Delta}: We explicitly computed the $5 \times 5$ transferability matrix $\mathbf{T} \in \mathbb{R}^{5 \times 5}$. We didn't stop there. We extracted the Normalized Transferability Delta ($\Delta \mathbf{T}$), successfully separating genuine adversarial gradient bleed from sheer baseline target stringency.
-    \item \textbf{Independent Semantic Fidelity Gating}: Mathematical evasion means absolutely nothing if the semantics collapse. We ruthlessly enforced a non-BERT NLI cross-encoder verification constraint ($\mathcal{F}(\mathbf{x}, \mathbf{\hat{x}}) \ge \theta_{\text{fid}}$) to keep the playing field intellectually honest.
-    \item \textbf{Cross-Domain Generalization}: We pushed 250 standard benchmark pairs through the gauntlet, spanning five totally distinct textual registers to expose architectural weaknesses unique to specific domains.
+    \item \textbf{Adaptive Saliency-Guided Attack Algorithm}: We design a detector-aware paraphrase attack that identifies high-attribution syntactic spans via Leave-One-Out ablation and applies targeted LLM perturbation via rejection sampling.
+    \item \textbf{Calibrated Five-Architecture Defense Benchmark}: We evaluate five defense paradigms ($\mathcal{D}_1$: SBERT, $\mathcal{D}_2$: SimCSE, $\mathcal{D}_3$: BMX Hybrid, $\mathcal{D}_4$: ColBERT Multi-Vector, $\mathcal{D}_5$: Longformer) under independently calibrated decision thresholds ($\tau_i$) at a fixed 5\% False Positive Rate ($\text{FPR} = 0.05$).
+    \item \textbf{Cross-Architecture Transferability \& Normalized Delta}: We compute the empirical $5 \times 5$ transferability matrix $\mathbf{T} \in \mathbb{R}^{5 \times 5}$ and Normalized Transferability Delta ($\Delta\mathbf{T}$), isolating transferable adversarial distortion from baseline sensitivity.
+    \item \textbf{Independent Semantic Fidelity Gating}: We decouple evasion success from semantic degradation with an architecturally independent, non-BERT NLI cross-encoder constraint ($\mathcal{F}(\mathbf{x}, \mathbf{\hat{x}}) \ge \theta_{\text{fid}}$).
+    \item \textbf{Cross-Domain Generalization}: We evaluate across five text registers comprising 250 standardized benchmark pairs (50 pairs per domain, five canonical NLP benchmarks).
 \end{itemize}
 
 \section{Related Work}
 
-We position our methodology at the collision point of three distinct literature threads: dense metric representation learning, specialized architectural retrieval indexing, and targeted adversarial text optimization.
+We frame our methodology against three literature domains: transformer-based semantic representations, architectural innovations for retrieval indexing, and adversarial attacks on natural language processing systems.
 
 \subsection{Transformer-Based Semantic Representations}
-Representation learning transformed completely when BERT \cite{devlin2019bert} and RoBERTa \cite{liu2019roberta} demonstrated the sheer power of masked language pre-training. Sentence-BERT adapted these deep transformers using Siamese twin networks, converting contextual token arrays into coherent sentence vectors directly comparable via simple cosine angles \cite{reimers2019sbert}. SimCSE pushed the geometric envelope further. By feeding identical sequences through independent dropout masks and optimizing an InfoNCE loss, it proved that unsupervised contrastive learning inherently repairs representation anisotropy without requiring human-annotated NLI pairs \cite{gao2021simcse}. Later works expanded this contrastive paradigm to massive multi-task corpora \cite{ni2022sentence}.
+Masked language modeling in BERT \cite{devlin2019bert} and RoBERTa \cite{liu2019roberta} established contextual representation learning. Sentence-BERT adapted these backbones with Siamese and triplet networks to produce sentence embeddings comparable via cosine distance \cite{reimers2019sbert}. SimCSE improved representation isotropy: contrastive learning over identical sentences with independent dropout masks yields competitive embeddings without labeled NLI supervision \cite{gao2021simcse}. Later work scaled multi-task contrastive fine-tuning across larger sentence-pair corpora \cite{ni2022sentence}.
 
 \subsection{Architectural Developments for Retrieval \& Matching}
-Pure dense embeddings have a notorious blind spot: they compress away rare keywords and domain-specific acronyms \cite{li2024bmx, robertson2009bm25}. Hybrid engines like BMX tackle this keyword amnesia head-on by fusing neural semantic vectors with entropy-weighted inverse document frequency (IDF) scoring \cite{li2024bmx, yoo2023patent}. When matching fine-grained passages, multi-vector late-interaction systems such as ColBERT retain every contextual token vector, evaluating alignment through a MaxSim operator that pairs query and document tokens individually \cite{khattab2020colbert, mysore2022scientific, santhanam2022colbertv2}. Long-form legal documents break standard 512-token transformers; Longformer resolves this scaling wall by substituting quadratic self-attention with localized sliding-window patterns, processing 4,096 tokens smoothly \cite{beltagy2020longformer, oliveira2022legal, jha2023longform}. In multilingual news verification, named-entity pipelines help anchor topic consistency across varied writing styles \cite{goel2022wolfies}.
+Dense embedding models suffer from anisotropy and lose fine-grained lexical signal \cite{li2024bmx, robertson2009bm25}. BMX fuses dense semantic similarity with inverse document frequency (IDF) and entropy-weighted lexical overlap to resolve keyword mismatch \cite{li2024bmx, yoo2023patent}. ColBERT retains all token embeddings and computes token-to-token MaxSim alignment, preserving context in scientific and technical text \cite{khattab2020colbert, mysore2022scientific, santhanam2022colbertv2}. Longformer replaces $O(N^2)$ self-attention with sparse sliding-window attention, modeling sequences up to 4,096 tokens without truncation \cite{beltagy2020longformer, oliveira2022legal, jha2023longform}. Cross-lingual news pipelines align journalistic discourse via named-entity extraction \cite{goel2022wolfies}.
 
 \subsection{Adversarial Paraphrasing and AI-Text Detectors}
-Adversarial NLP probes classifier brittleness by crafting input perturbations that flip decisions while maintaining readability \cite{morris2020textattack, waghela2024sassp}. Rather than burning queries randomly, saliency-guided algorithms isolate the highest-attribution tokens, achieving drastically superior sample efficiency \cite{waghela2024sassp}. Detection benchmarks have evolved rapidly: PADBen categorizes obfuscations across five structural tiers from basic synonym swaps to multi-hop clause repackaging \cite{zha2025padben}. PlagBench catalogs extensive LLM-generated plagiarism scenarios \cite{lee2025plagbench}. DetectGPT detects machine text in a zero-shot fashion by examining negative log-probability curvature \cite{mitchell2023detectgpt, hans2024spotting}. Semantic metrics like CPES \cite{alsulami2026cpes} and BERTScore \cite{zhang2019bertscore} ensure that perturbed sentences retain their authentic meaning without penalizing legitimate stylistic rewrites.
+Adversarial NLP measures classifier robustness under targeted perturbation \cite{morris2020textattack, waghela2024sassp}. Saliency-guided attacks compute token attribution scores and perturb only the highest-influence tokens, improving query efficiency over random sampling \cite{waghela2024sassp}. PADBen defines a five-tier obfuscation taxonomy spanning lexical substitution to multi-hop structural transformation \cite{zha2025padben}. PlagBench supplies corpora of LLM-generated verbatim, paraphrased, and summarized plagiarism \cite{lee2025plagbench}. DetectGPT detects machine-generated text zero-shot by measuring negative curvature in LLM log-probability space \cite{mitchell2023detectgpt, hans2024spotting}. CPES \cite{alsulami2026cpes} and BERTScore \cite{zhang2019bertscore} evaluate whether adversarial paraphrases preserve semantic equivalence without penalizing valid syntactic variation.
 
 \section{System Architecture \& Methodology}
 
@@ -515,11 +515,7 @@ Journalistic (News)   & 20 & 80.0\% & 80.0\% & 0.841 & 10.8 \\
 \label{fig:domain_breakdown_plot}
 \end{figure}
 
-Empirical data confirms that text domains heavily reliant on rigid terminological syntax exhibit astronomically higher intrinsic resistance to adversarial manipulation. While open-domain journalistic news crumbles under attack (yielding a massive $80.0\%$ FPER) and obfuscated benchmarks remain highly vulnerable ($60.0\%$ FPER), the SciDocs corpus demonstrates absolute resilience with a $0.0\%$ evasion rate.
-
-Why does the scientific domain completely resist evasion? It consistently maxes out the 50-query budget without producing even a single successful adversarial hit. The culprit is a structural mechanism we term the `Fidelity-Evasion Paradox.' Specialized literature is fundamentally anchored by strict mathematical and biological nomenclature. You simply cannot arbitrarily swap terms like \textit{endonuclease complexes} or \textit{non-Abelian anyons} without consequence. An attacker desperate to pull the similarity score below the defense threshold is practically forced to ablate these critical high-attribution tokens. However, replacing them obliterates the actual science. The independent DeBERTa NLI cross-encoder immediately spots the factual distortion. It slams the door shut, forcefully rejecting the candidate rewrite for plunging below the $\theta_{\text{fid}} = 0.75$ semantic preservation floor.
-
-The optimizer essentially becomes trapped. Minor tweaks fail to fool the dense retrieval defense. Major ablations irreversibly destroy the sentence's meaning. Faced with an impossibly narrow optimization manifold, the adversarial engine burns through its entire computational budget probing semantic dead ends until it inevitably fails. Journalistic prose sits at the complete opposite end of this spectrum. It inherently thrives on lexical flexibility. Because reporters frequently juggle distinct adjectives and phrasing to describe the exact same underlying event, the attack algorithm inherits a vast, highly forgiving playground of valid semantic synonyms to safely manipulate.
+Domains with rigid terminological syntax show the highest resistance: SciDocs returns 0.0\% FPER and Legal Court documents 35.0\%, against 80.0\% for open-domain journalistic news and 60.0\% for obfuscated PADBen text. Specialized nomenclature in scientific and legal corpora imposes tighter semantic-fidelity constraints during rewriting.
 
 \begin{figure}[htbp]
 \centering
@@ -541,7 +537,7 @@ The optimizer essentially becomes trapped. Minor tweaks fail to fool the dense r
 \addplot[fill=orange!70] coordinates {(SBERT,23.4) (SimCSE,43.0) (BMX,30.8) (ColBERT,27.9) (Longformer,27.9)};
 \end{axis}
 \end{tikzpicture}
-\caption{Mean Query Complexity (MQC) under Tier 2 Saliency-Guided attacks using calibrated thresholds. SimCSE almost entirely exhausts the adversarial query budget ($43.0$ avg. queries), while other architectures delay evasion success to around $23-30$ queries, proving that properly calibrated thresholds restore query cost burdens.}
+\caption{Mean Query Complexity (MQC) under Tier 2 attacks at calibrated thresholds. SimCSE exhausts 43.0 of 50 queries on average; other architectures reach evasion within 23--31 queries, showing calibrated thresholds raise query cost.}
 \label{fig:query_curve}
 \end{figure}
 
@@ -552,7 +548,7 @@ We compute the empirical $5 \times 5$ cross-architecture transferability matrix 
     T_{i, j} = \text{FPER}\big(\mathcal{P}_{\mathcal{D}_i}(\mathbf{\tilde{x}}) \to \mathcal{D}_j\big)
     \label{eq:transfer}
 \end{equation}
-where each entry $T_{i, j}$ represents the FPER achieved when candidate rewrites optimized against source defense $\mathcal{D}_i$ are evaluated zero-shot against target defense $\mathcal{D}_j$ (Figure~\ref{fig:transferability_heatmap}).
+Each entry $T_{i, j}$ is the FPER when candidates optimized against source defense $\mathcal{D}_i$ transfer zero-shot to target defense $\mathcal{D}_j$ (Figure 5).
 
 \begin{figure}[htbp]
 \centering
@@ -588,20 +584,20 @@ where each entry $T_{i, j}$ represents the FPER achieved when candidate rewrites
 };
 \end{axis}
 \end{tikzpicture}
-\caption{Adversarial Transferability Heatmap $\mathbf{T} \in \mathbb{R}^{5 \times 5}$ ($T_{i, j} = \text{FPER}(\mathcal{P}_{\mathcal{D}_i}(\mathbf{\tilde{x}}) \to \mathcal{D}_j)$). Darker shaded regions indicate higher zero-shot transferability success across distinct defense domains.}
+\caption{Adversarial transferability heatmap $\mathbf{T} \in \mathbb{R}^{5 \times 5}$ ($T_{i, j} = \text{FPER}(\mathcal{P}_{\mathcal{D}_i}(\mathbf{\tilde{x}}) \to \mathcal{D}_j)$). Darker cells indicate higher zero-shot transferability across defense architectures.}
 \label{fig:transferability_heatmap}
 \end{figure}
 
-To isolate genuine source-to-target adversarial distortion from baseline static sensitivity, we compute the \textbf{Normalized Transferability Delta} $\Delta \mathbf{T} \in \mathbb{R}^{5 \times 5}$:
+We isolate genuine source-to-target distortion from baseline static sensitivity with the Normalized Transferability Delta $\Delta \mathbf{T} \in \mathbb{R}^{5 \times 5}$:
 \begin{equation}
     \Delta T_{i, j} = \text{FPER}\big(\mathcal{P}_{\mathcal{D}_i}(\mathbf{\tilde{x}}) \to \mathcal{D}_j\big) - \text{FPER}\big(\text{Static Baseline} \to \mathcal{D}_j\big)
     \label{eq:delta_transfer}
 \end{equation}
-Evaluating $\Delta \mathbf{T}$ reveals that adversarial perturbations generated against SimCSE ($\mathcal{D}_2$) or SBERT ($\mathcal{D}_1$) yield near-zero transferability increments (mostly bounded within $\pm 0.05$). This indicates that cross-architecture evasion is predominantly determined by the absolute stringency of the target defense's calibrated threshold rather than universally transferring adversarial token alignments.
+$\Delta T$ stays within $\pm 0.05$ for perturbations generated against SimCSE ($\mathcal{D}_2$) or SBERT ($\mathcal{D}_1$): cross-architecture evasion is governed by the target defense's threshold stringency, not by transferable adversarial token alignment.
 
 \subsection{BMX Hybrid Sensitivity Ablation Sweep}
 
-To verify whether BMX vulnerability stems from lexical overlap weighting $\alpha$, Table~\ref{tab:bmx_ablation} presents the sensitivity sweep across $\alpha \in \{0.30, 0.50, 0.70, 0.90\}$.
+Table IV sweeps lexical weighting $\alpha \in \{0.30, 0.50, 0.70, 0.90\}$ to test whether BMX vulnerability stems from $\alpha$. Raising dense reliance to $\alpha = 0.90$ cuts evasion from 95.0\% to 5.0\% by shifting scores above $\tau_3 = 0.48$. Heavy lexical weighting ($1 - \alpha$) depresses similarity scores enough to cause detection failure even against standard paraphrases.
 
 \begin{table}[htbp]
 \centering
@@ -623,11 +619,9 @@ $\alpha = 0.90$ & 90\% & 10\% & 0.7129 & 5.0\% \\
 \small \textbf{Glossary:} \textbf{Parameter $\alpha$}: The hyperparameter controlling the balance between dense vector similarity and lexical overlap; \textbf{Dense Ratio}: The percentage weight of the neural dense representation ($100 \times \alpha$); \textbf{Lexical Ratio}: The percentage weight of the token-level TF-IDF overlap ($100 \times (1-\alpha)$); \textbf{Adversarial Evasion}: The success rate of the saliency-guided attack in dropping the score below $\tau_3=0.48$.
 \end{table}
 
-Increasing dense reliance ($\alpha = 0.90$) drastically reduces evasion vulnerability from $95.0\%$ to $5.0\%$ by shifting the scoring distribution well above the $\tau_3=0.48$ detection threshold. This confirms that heavy lexical penalties ($1-\alpha$) drag the overall similarity scores artificially low, precipitating catastrophic detection failures even against standard paraphrases.
-
 \subsection{Comparison with Baseline Defenses and Prior Works}
 
-Table~\ref{tab:baseline_comparison} compares our adaptive attack against prior published plagiarism detection and evasion baselines.
+Table V compares our attack against prior published detection and evasion baselines.
 
 \begin{table}[htbp]
 \centering
@@ -651,16 +645,16 @@ ColBERT Multi-Vector \cite{khattab2020colbert}             & \textbf{Ours (Tier 
 \small \textbf{Glossary:} \textbf{Baseline / Defense System}: The model architecture used for detecting plagiarism; \textbf{Attack Formulation}: The adversarial strategy used to evade the defense; \textbf{Detection AUROC}: The area under the ROC curve reflecting global detection separability; \textbf{Adversarial FPER}: Fidelity-Preserved Evasion Rate of the attack against the defense; \textbf{Fidelity $\mathcal{F}$}: Mean semantic preservation score of successful adversarial examples.
 \end{table}
 
-Under our saliency-guided attack, the detection capability (AUROC) of complex hybrid architectures collapses near random chance ($0.518$), while contrastive single-vector representations retain substantially higher discriminant power.
+Under saliency-guided attack, AUROC collapses toward chance for the hybrid BMX scorer (0.518) but stays comparatively higher for the single-vector SBERT encoder (0.781) and multi-vector ColBERT (0.684), despite SBERT's higher FPER (55.0\% vs. 40.0\%).
 
 \section{Conclusion \& Future Roadmap}
 \label{sec:conclusion}
 
-The traditional defense models are fundamentally broken. But they don't all break the same way. We engineered a merciless empirical framework to expose exactly how modern retrieval and similarity-based plagiarism defenses shatter under detector-aware paraphrase attacks. We refused to use a single lazy threshold. Instead, we mathematically calibrated independent decision boundaries ($\tau_i$) strictly locked to a $5\%$ False Positive Rate across all five architectures. This singular decision purged trivial baseline failures from the dataset entirely. If an attack succeeded here, it legitimately cracked the underlying geometric space.
+We built an empirical framework to quantify the structural resilience of retrieval and similarity-based plagiarism defenses under adaptive, detector-aware paraphrase attack. Independently calibrated thresholds ($\tau_i$, 5\% FPR) across five architectures eliminate trivial baseline detection failure, so successful evasion requires genuine manipulation of embedding geometry.
 
-What did we discover? The architectural blueprint dictates everything. If you train isotropic embeddings via rigorous contrastive learning, like SimCSE, you practically forge digital armor. SimCSE exhibited near-absolute structural stability, crushing Fidelity-Preserved Evasion Rates (FPER) down to a staggering $15.0\%$ while exhaustively draining the adversarial query budget. SBERT sat at the absolute opposite end of the spectrum. Stripped of contrastive optimization, standard single-vector mean-pooling left the backdoor wide open, hemorrhaging vulnerability at a massive $55.0\%$ FPER. The fancy intermediate models—multi-vector late-interaction networks (ColBERT) and entropy-weighted hybrid scorers (BMX)—hovered nervously between these two extremes ($40\%-45\%$ FPER). Yes, fine-grained sequence alignment adds a frustrating layer of adversarial friction. No, it absolutely does not immunize the system against targeted saliency algorithms. Zero-shot transferability ultimately proved to be an illusion. It is dictated almost entirely by the absolute mathematical stringency of the target defense, not by some magical structural overlap in the adversarial gradients.
+Architectural formulation dictates adversarial vulnerability. Contrastive, isotropic SimCSE embeddings bound FPER to 15.0\% and exhaust the query budget; mean-pooled SBERT, without contrastive optimization, reaches 55.0\%--60.0\% FPER. Multi-vector ColBERT and entropy-weighted BMX sit between these extremes at 40.0\%--45.0\% FPER: fine-grained sequence alignment adds adversarial friction but does not immunize a system against targeted saliency attack. Zero-shot transferability tracks target-defense threshold stringency, not structural overlap between source and target gradients.
 
-Going forward, the roadmap is incredibly aggressive. We plan to investigate adversarial defense retraining to aggressively seal these geometric representation holes. We'll explore dynamic query expansion protocols to scramble the attack surface. Finally, integrating cryptographically verifiable watermark signals directly into the retrieval representations might be the only mathematically sound way to truly safeguard intellectual property in the generative era.
+Future work will investigate adversarial retraining to close geometric representation holes, dynamic query-expansion protocols, and cryptographically verifiable watermark signals embedded in retrieval representations.
 
 \begin{thebibliography}{25}
 
